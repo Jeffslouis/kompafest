@@ -999,7 +999,6 @@
       <p class="popup-urgency">Booking opens soon! Priority list members get first access before the public!</p>
       <form class="popup-form" id="priorityForm">
         <input type="email" name="email" placeholder="Your email" required autocomplete="email">
-        <input type="hidden" name="_subject" value="New KompaFest Cruise priority-list signup">
         <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
         <button type="submit" class="btn-primary">Get Access →</button>
       </form>
@@ -1010,14 +1009,12 @@
   <script>
     (function(){
       /* ============================================================
-         PRIORITY LIST EMAIL CAPTURE  (FormSubmit.co — no account)
-         Replace the address below with the inbox that should receive
-         signups. The FIRST submission triggers a one-time confirmation
-         email from FormSubmit — click the link in it once, and every
-         signup after that is delivered automatically.
+         PRIORITY LIST EMAIL CAPTURE  ->  Google Sheet
+         Paste the Google Apps Script web-app URL below (ends in /exec).
+         Setup steps are in README.md. Every signup appends a row:
+         Timestamp | Email | Source | Page
          ============================================================ */
-      var FORM_EMAIL = "REPLACE_WITH_YOUR@EMAIL.COM";
-      var ENDPOINT = "https://formsubmit.co/ajax/" + encodeURIComponent(FORM_EMAIL);
+      var SHEET_ENDPOINT = "REPLACE_WITH_APPS_SCRIPT_URL";
 
       var popup = document.getElementById('priorityPopup');
       var closeBtn = document.getElementById('priorityPopupClose');
@@ -1047,22 +1044,32 @@
           e.preventDefault();
           var btn = form.querySelector('button[type="submit"]');
           if(msg){ msg.hidden = true; msg.className = 'popup-msg'; }
-          if(FORM_EMAIL.indexOf('REPLACE_WITH_YOUR') === 0){
+
+          /* honeypot: silently accept bots, write nothing */
+          if(form._honey && form._honey.value){
+            form.hidden = true;
+            if(msg){ msg.textContent = 'You’re on the list — see you on the water. 🌴'; msg.classList.add('is-ok'); msg.hidden = false; }
+            return;
+          }
+          if(SHEET_ENDPOINT.indexOf('REPLACE_') === 0){
             if(msg){ msg.textContent = 'Signup isn’t connected yet — check back soon.'; msg.classList.add('is-err'); msg.hidden = false; }
             return;
           }
-          btn.disabled = true; var label = btn.textContent; btn.textContent = 'Sending…';
-          fetch(ENDPOINT, {
+
+          var label = btn.textContent;
+          btn.disabled = true; btn.textContent = 'Adding you…';
+          fetch(SHEET_ENDPOINT, {
             method: 'POST',
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-            body: JSON.stringify({
+            mode: 'no-cors',
+            body: new URLSearchParams({
               email: form.email.value,
-              _subject: 'New KompaFest Cruise priority-list signup',
-              _template: 'table'
+              source: 'priority-popup',
+              page: location.pathname
             })
-          }).then(function(r){ return r.json(); }).then(function(){
+          }).then(function(){
             form.hidden = true;
-            if(msg){ msg.textContent = 'You’re on the list — we’ll be in touch. 🌴'; msg.classList.add('is-ok'); msg.hidden = false; }
+            try{ localStorage.setItem('priorityListJoined','1'); }catch(err){}
+            if(msg){ msg.textContent = 'You’re on the list — see you on the water. 🌴'; msg.classList.add('is-ok'); msg.hidden = false; }
           }).catch(function(){
             btn.disabled = false; btn.textContent = label;
             if(msg){ msg.textContent = 'Something went wrong. Please try again.'; msg.classList.add('is-err'); msg.hidden = false; }
