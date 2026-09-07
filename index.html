@@ -614,13 +614,46 @@
   .popup-msg.is-ok{ color:var(--gold); }
   .popup-msg.is-err{ color:var(--ember); }
 
-  /* --- Sponsor teaser --- */
-  .sponsor-teaser{ background:var(--ink); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:88px 0; }
-  .sponsor-teaser .sp-card{ background:var(--ink-2); }
+  /* signup confirmation (popup + mailing) */
+  .popup-done{ text-align:center; padding:22px 6px 10px; }
+  .popup-check{
+    width:62px; height:62px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 18px; font-size:30px; font-weight:800;
+    background:var(--gold); color:var(--ink);
+  }
+  .popup-done h2{ color:var(--paper); }
+  .popup-done p{ margin-top:12px; font-size:14px; line-height:1.6; color:rgba(var(--paper-rgb),0.65); }
+  .mailing-done{ max-width:460px; margin:0 auto; }
+  .mailing-done h2{ font-size:clamp(26px,4vw,38px); }
 
-  /* alternating section bands */
-  #included, #itinerary{ background:var(--ink); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-  #experience{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  /* --- Sponsor teaser --- */
+  .sponsor-teaser{ background:var(--sand); color:var(--ink); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:88px 0; }
+
+  /* ============================================================
+     Alternating section rhythm:
+       navy   -> raffle, manifest, experience, mailing
+       sand   -> sponsor, included, itinerary
+     ============================================================ */
+  #experience{ background:var(--ink-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  #included.exp, #itinerary.exp{ border-top:1px solid rgba(var(--ink-rgb),0.12); border-bottom:1px solid rgba(var(--ink-rgb),0.12); }
+
+  /* light-band text + surfaces (sponsor / included) */
+  .sponsor-teaser .section-head h2, .sponsor-teaser .sp-card h3,
+  #included.exp .included-card h3{ color:var(--ink); }
+  .sponsor-teaser .section-head p, .sponsor-teaser .sp-card p,
+  #included.exp .included-card p{ color:rgba(var(--ink-rgb),0.62); }
+  .sponsor-teaser .eyebrow{ background:rgba(var(--ink-rgb),0.06); border-color:rgba(var(--ink-rgb),0.15); color:var(--ink); }
+  .sponsor-teaser .btn-ghost{ border-color:rgba(var(--ink-rgb),0.28); color:var(--ink); }
+  .sponsor-teaser .btn-ghost:hover{ border-color:var(--ink); background:rgba(var(--ink-rgb),0.06); }
+  .sponsor-teaser .sponsor-points, .sponsor-teaser .sponsor-tiers,
+  #included.exp .included-grid{ background:rgba(var(--ink-rgb),0.14); border-color:rgba(var(--ink-rgb),0.14); }
+  .sponsor-teaser .sp-card, .sponsor-teaser .sponsor-tiers li,
+  #included.exp .included-card{ background:var(--paper); }
+  #included.exp .included-card:hover{ background:#fff; }
+  .sponsor-teaser .sponsor-tiers span{ color:rgba(var(--ink-rgb),0.7); }
+  .sponsor-teaser .sponsor-tiers em{ color:rgba(var(--ink-rgb),0.45); }
+  .sponsor-teaser .sponsor-tiers strong{ color:#9a6a12; }
   .sponsor-teaser .eyebrow{ margin-bottom:16px; }
   .sponsor-teaser .eyebrow .dot{ background:var(--lagoon); }
   .sponsor-points{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:26px; }
@@ -810,7 +843,7 @@
     </div>
   </div>
 
-  <section id="included">
+  <section id="included" class="exp">
     <div class="wrap">
       <div class="section-head">
         <h2>What's<br>included</h2>
@@ -856,7 +889,7 @@
     </div>
   </section>
 
-  <section id="experience" class="exp">
+  <section id="experience" class="exp-band">
     <div class="wrap">
       <div class="section-head">
         <h2>Explore what<br>you'll feel</h2>
@@ -902,7 +935,7 @@
     </div>
   </div>
 
-  <section id="itinerary" class="itinerary">
+  <section id="itinerary" class="itinerary exp">
     <div class="wrap">
       <div class="section-head">
         <h2>Ship's<br>manifest</h2>
@@ -925,16 +958,23 @@
 
   <section class="mailing" id="mailing">
     <div class="wrap mailing-inner">
-      <div class="eyebrow"><span class="dot"></span>The Mailing List</div>
-      <h2>Be first to know</h2>
-      <p class="mailing-lead">Cabins, pricing, sail dates, ports, themed nights, artist announcements — mailing-list members hear it first, before it goes public. One email, no spam.</p>
-      <form class="mailing-form" id="mailingForm">
-        <input type="email" name="email" placeholder="Your email" required autocomplete="email">
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
-        <button type="submit" class="btn-primary">Sign Up →</button>
-      </form>
-      <p class="mailing-msg" id="mailingMsg" role="status" hidden></p>
-      <p class="mailing-fine">Adds you to the priority list — unsubscribe anytime.</p>
+      <div class="mailing-pitch" id="mailingPitch">
+        <div class="eyebrow"><span class="dot"></span>The Mailing List</div>
+        <h2>Be first to know</h2>
+        <p class="mailing-lead">Cabins, pricing, sail dates, ports, themed nights, artist announcements — mailing-list members hear it first, before it goes public. One email, no spam.</p>
+        <form class="mailing-form" id="mailingForm">
+          <input type="email" name="email" placeholder="Your email" required autocomplete="email">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
+          <button type="submit" class="btn-primary">Sign Up →</button>
+        </form>
+        <p class="mailing-msg" id="mailingMsg" role="status" hidden></p>
+        <p class="mailing-fine">Adds you to the priority list — unsubscribe anytime.</p>
+      </div>
+      <div class="popup-done mailing-done" id="mailingDone" hidden>
+        <div class="popup-check">✓</div>
+        <h2>You're on the list!</h2>
+        <p>We'll email you the moment there's news to share.</p>
+      </div>
     </div>
   </section>
 
@@ -1002,23 +1042,30 @@
   <div class="popup-overlay" id="priorityPopup">
     <div class="popup-card">
       <button class="popup-close" id="priorityPopupClose" aria-label="Close">&times;</button>
-      <div class="popup-eyebrow">KompaFest Cruise 2028</div>
-      <h2>Get Priority Access</h2>
-      <p class="popup-sub">Join over 1,000+ travelers already on the priority list.</p>
-      <p class="popup-lead">Get on the exclusive priority list to:</p>
-      <ul class="popup-checklist">
-        <li>✅ Book before the public</li>
-        <li>✅ First pick of best cabins</li>
-        <li>✅ Be the first to hear artist announcements</li>
-        <li>✅ VIP giveaways and launch updates</li>
-      </ul>
-      <p class="popup-urgency">Booking opens soon! Priority list members get first access before the public!</p>
-      <form class="popup-form" id="priorityForm">
-        <input type="email" name="email" placeholder="Your email" required autocomplete="email">
-        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
-        <button type="submit" class="btn-primary">Get Access →</button>
-      </form>
-      <p class="popup-msg" id="priorityMsg" role="status" hidden></p>
+      <div class="popup-pitch" id="priorityPitch">
+        <div class="popup-eyebrow">KompaFest Cruise 2028</div>
+        <h2>Get Priority Access</h2>
+        <p class="popup-sub">Join over 1,000+ travelers already on the priority list.</p>
+        <p class="popup-lead">Get on the exclusive priority list to:</p>
+        <ul class="popup-checklist">
+          <li>✅ Book before the public</li>
+          <li>✅ First pick of best cabins</li>
+          <li>✅ Be the first to hear artist announcements</li>
+          <li>✅ VIP giveaways and launch updates</li>
+        </ul>
+        <p class="popup-urgency">Booking opens soon! Priority list members get first access before the public!</p>
+        <form class="popup-form" id="priorityForm">
+          <input type="email" name="email" placeholder="Your email" required autocomplete="email">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
+          <button type="submit" class="btn-primary">Get Access →</button>
+        </form>
+        <p class="popup-msg" id="priorityMsg" role="status" hidden></p>
+      </div>
+      <div class="popup-done" id="priorityDone" hidden>
+        <div class="popup-check">✓</div>
+        <h2>You're on the list!</h2>
+        <p>We'll email you the moment cabins, dates, ports and themed nights are announced.</p>
+      </div>
     </div>
   </div>
 
@@ -1033,8 +1080,9 @@
       var SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzjebDz0-8XPfd9bsHssr-OOb6SyrRzm_DJa7Yj5ArvRzJE12uGOXbJuOMlYexkcQPH_w/exec";
 
       /* ---- shared signup handler (popup + inline mailing form) ---- */
-      function wireSignup(form, msg, source){
-        if(!form) return;
+      function wireSignup(opts){
+        var form = opts.form; if(!form) return;
+        var msg = opts.msg;
         var base = msg ? (msg.getAttribute('data-base') || 'popup-msg') : '';
         function say(text, ok){
           if(!msg) return;
@@ -1042,12 +1090,24 @@
           msg.className = base + (ok ? ' is-ok' : ' is-err');
           msg.hidden = false;
         }
+        function succeed(){
+          try{ localStorage.setItem('priorityListJoined','1'); }catch(err){}
+          form.reset();
+          if(opts.pitch && opts.done){
+            opts.pitch.hidden = true;
+            opts.done.hidden = false;
+          } else {
+            form.hidden = true;
+            say('You’re on the list — see you on the water. 🌴', true);
+          }
+          if(opts.after) setTimeout(opts.after, 2200);
+        }
         form.addEventListener('submit', function(e){
           e.preventDefault();
           var btn = form.querySelector('button[type="submit"]');
           if(msg) msg.hidden = true;
 
-          if(form._honey && form._honey.value){ form.hidden = true; say('You’re on the list — see you on the water. 🌴', true); return; }
+          if(form._honey && form._honey.value){ succeed(); return; }
           if(SHEET_ENDPOINT.indexOf('REPLACE_') === 0){ say('Signup isn’t connected yet — check back soon.', false); return; }
 
           var label = btn.textContent;
@@ -1055,12 +1115,8 @@
           fetch(SHEET_ENDPOINT, {
             method: 'POST',
             mode: 'no-cors',
-            body: new URLSearchParams({ email: form.email.value, source: source, page: location.pathname })
-          }).then(function(){
-            form.hidden = true;
-            try{ localStorage.setItem('priorityListJoined','1'); }catch(err){}
-            say('You’re on the list — see you on the water. 🌴', true);
-          }).catch(function(){
+            body: new URLSearchParams({ email: form.email.value, source: opts.source, page: location.pathname })
+          }).then(succeed).catch(function(){
             btn.disabled = false; btn.textContent = label;
             say('Something went wrong. Please try again.', false);
           });
@@ -1083,10 +1139,23 @@
       document.addEventListener('keydown', function(e){ if(e.key === 'Escape') dismiss(); });
 
       var pmsg = document.getElementById('priorityMsg'); if(pmsg) pmsg.setAttribute('data-base', 'popup-msg');
-      wireSignup(document.getElementById('priorityForm'), pmsg, 'priority-popup');
+      wireSignup({
+        form: document.getElementById('priorityForm'),
+        msg: pmsg,
+        source: 'priority-popup',
+        pitch: document.getElementById('priorityPitch'),
+        done: document.getElementById('priorityDone'),
+        after: dismiss
+      });
 
       var mmsg = document.getElementById('mailingMsg'); if(mmsg) mmsg.setAttribute('data-base', 'mailing-msg');
-      wireSignup(document.getElementById('mailingForm'), mmsg, 'mailing-section');
+      wireSignup({
+        form: document.getElementById('mailingForm'),
+        msg: mmsg,
+        source: 'mailing-section',
+        pitch: document.getElementById('mailingPitch'),
+        done: document.getElementById('mailingDone')
+      });
     })();
   </script>
 
