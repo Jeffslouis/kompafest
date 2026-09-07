@@ -613,7 +613,7 @@
     try{
       if(sessionStorage.getItem('kf_seen')) return;
       sessionStorage.setItem('kf_seen','1');
-      var EP = "https://script.google.com/macros/s/AKfycbzjebDz0-8XPfd9bsHssr-OOb6SyrRzm_DJa7Yj5ArvRzJE12uGOXbJuOMlYexkcQPH_w/exec";
+      var EP = "https://script.google.com/macros/s/AKfycbydAVmeDWMMi8b1JzcmaKUnw6U0l7tJIFnI-VP6x4oE_5WfHxSLotnpk7b4-3pMKSQh-w/exec";
       var vid = localStorage.getItem('kf_vid');
       var returning = !!vid;
       if(!vid){ vid = Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('kf_vid', vid); }
