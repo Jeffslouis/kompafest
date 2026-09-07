@@ -595,6 +595,27 @@
   .popup-msg.is-ok{ color:var(--gold); }
   .popup-msg.is-err{ color:var(--ember); }
 
+  /* --- Sponsor teaser --- */
+  .sponsor-teaser{ background:var(--ink-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:88px 0; }
+  .sponsor-teaser .eyebrow{ margin-bottom:16px; }
+  .sponsor-teaser .eyebrow .dot{ background:var(--lagoon); }
+  .sponsor-points{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:26px; }
+  .sp-card{ background:var(--ink); padding:30px 26px; }
+  .sp-num{ font-family:'Space Mono',monospace; font-size:12px; font-weight:700; color:var(--lagoon); letter-spacing:0.08em; }
+  .sp-card h3{ font-family:'Anton',sans-serif; font-weight:400; text-transform:uppercase; font-size:19px; color:var(--paper); margin:10px 0 8px; }
+  .sp-card p{ font-size:13.5px; line-height:1.6; color:rgba(var(--paper-rgb),0.6); }
+  .sponsor-tiers{ list-style:none; display:grid; gap:1px; background:var(--line); border:1px solid var(--line); }
+  .sponsor-tiers li{ background:var(--ink); display:flex; flex-wrap:wrap; gap:6px 16px; align-items:baseline; padding:16px 22px; }
+  .sponsor-tiers strong{ font-family:'Space Mono',monospace; font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold); min-width:118px; }
+  .sponsor-tiers em{ font-style:normal; color:rgba(var(--paper-rgb),0.5); }
+  .sponsor-tiers span{ font-size:13.5px; color:rgba(var(--paper-rgb),0.7); }
+  .sponsor-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-top:30px; }
+  @media (max-width:820px){
+    .sponsor-teaser{ padding:56px 0; }
+    .sponsor-points{ grid-template-columns:1fr; }
+    .sponsor-actions .btn-primary, .sponsor-actions .btn-ghost{ width:100%; justify-content:center; }
+  }
+
   /* --- Header wordmark + footer logo plate --- */
   .logo-word{ font-family:'Anton',sans-serif; font-weight:400; font-size:23px; line-height:1; letter-spacing:0.02em; white-space:nowrap; }
   .logo .lw-a{ color:var(--ember); }
@@ -632,9 +653,8 @@
         <a href="#included">What's Included</a>
         <a href="#itinerary">Itinerary</a>
         <a href="ambassador.html">Ambassador</a>
-        <a href="music.html">Music</a>
+        <a href="sponsor.html">Sponsor</a>
       </div>
-      <a href="sponsor.html" class="nav-sponsor-btn">Sponsor</a>
       <a href="#priority" class="nav-cta" data-priority>Join Priority List</a>
     </div>
   </nav>
@@ -697,6 +717,47 @@
         <a class="btn-ghost" href="https://www.instagram.com/kompafest_official/" target="_blank" rel="noopener noreferrer">Follow us on Instagram</a>
       </div>
       <p class="raffle-rules"><a href="raffle-rules.html">Official raffle rules</a> — no purchase necessary, void where prohibited. See rules for eligibility, entry limits, and full terms.</p>
+    </div>
+  </section>
+
+  <section class="sponsor-teaser" id="sponsor">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow"><span class="dot"></span>Partner With Us</div>
+          <h2>Put your brand<br>on the water</h2>
+        </div>
+        <p>Four nights, one ship, an engaged 21+ Kompa crowd with nowhere else to be — and no competing brands shouting over you.</p>
+      </div>
+
+      <div class="sponsor-points">
+        <div class="sp-card">
+          <span class="sp-num">01</span>
+          <h3>Captive audience</h3>
+          <p>Guests see your brand because there's nowhere else to look — deck, feed, and inbox.</p>
+        </div>
+        <div class="sp-card">
+          <span class="sp-num">02</span>
+          <h3>Real engagement</h3>
+          <p>Sampling, deck activations, and photo moments guests actually want to post.</p>
+        </div>
+        <div class="sp-card">
+          <span class="sp-num">03</span>
+          <h3>Reach before sail day</h3>
+          <p>Priority list, ambassador network, and socials put you in front of guests early.</p>
+        </div>
+      </div>
+
+      <ul class="sponsor-tiers">
+        <li><strong>Wave</strong><span>Logo on site &amp; priority-list emails</span></li>
+        <li><strong>Reef</strong><span>+ onboard signage &amp; a dedicated social post</span></li>
+        <li><strong>Anchor <em>(Title)</em></strong><span>+ deck activation, stage branding &amp; VIP cabins</span></li>
+      </ul>
+
+      <div class="sponsor-actions">
+        <a class="btn-primary" href="sponsor.html">Explore Sponsorship →</a>
+        <a class="btn-ghost" href="sponsor.html#inquire">Send an Inquiry</a>
+      </div>
     </div>
   </section>
 
