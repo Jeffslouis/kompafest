@@ -2,59 +2,82 @@
 
 Marketing site for KompaFest Cruise. Static HTML, served via GitHub Pages at https://kompafestcruise.com.
 
-- `index.html` — home (hero, Free Cabin Raffle, sponsor teaser, itinerary, etc.)
+- `index.html` — home (hero, Free Cabin Raffle, sponsor teaser, itinerary, mailing list)
 - `faq.html`, `presale.html`, `sponsor.html`, `ambassador.html`, `music.html` — content pages
 - `privacy.html`, `terms.html`, `refund.html`, `raffle-rules.html` — legal
 - `images/` — assets (`logo.webp` is the footer mark; the header uses a CSS wordmark)
 - `screenshot.py` — local viewport screenshot helper
 
-## Priority-list signups → Google Sheet
+## Google Sheet: signups + visits
 
-The "Join Priority List" popup posts each signup to a Google Apps Script
-web app, which appends a row to a Google Sheet you own:
-`Timestamp | Email | Source | Page`.
+One Google Apps Script web app (URL is `SHEET_ENDPOINT` in `index.html`, and
+`EP` in the small tracking `<script>` on every page) writes to two tabs in a
+Google Sheet you own:
 
-**One-time setup:**
+- **Signups** — `Timestamp | Email | Source | Page` (from the priority
+  popup and the "Be first to know" mailing form)
+- **Visits** — `Timestamp | Page | Referrer | Returning | Visitor | Screen | Language | User agent`
+  (one row the first time each browser session lands on the site)
 
-1. Create a new Google Sheet (go to https://sheets.new). Name it, e.g.
-   "KompaFest Priority List".
-2. In the Sheet: **Extensions → Apps Script**.
-3. Delete the sample code and paste:
+### Apps Script code
 
-   ```js
-   function doPost(e) {
-     var lock = LockService.getScriptLock();
-     lock.tryLock(10000);
-     try {
-       var ss = SpreadsheetApp.getActiveSpreadsheet();
-       var sheet = ss.getSheetByName('Signups') || ss.insertSheet('Signups');
-       if (sheet.getLastRow() === 0) {
-         sheet.appendRow(['Timestamp', 'Email', 'Source', 'Page']);
-       }
-       var p = (e && e.parameter) || {};
-       sheet.appendRow([new Date(), p.email || '', p.source || '', p.page || '']);
-       return ContentService.createTextOutput(JSON.stringify({ ok: true }))
-         .setMimeType(ContentService.MimeType.JSON);
-     } catch (err) {
-       return ContentService.createTextOutput(JSON.stringify({ ok: false, error: String(err) }))
-         .setMimeType(ContentService.MimeType.JSON);
-     } finally {
-       lock.releaseLock();
-     }
-   }
-   ```
+In the Sheet: **Extensions → Apps Script**, replace everything with:
 
-4. Save (Ctrl/Cmd+S).
-5. **Deploy → New deployment**. Click the gear → **Web app**.
-   - Execute as: **Me**
-   - Who has access: **Anyone**
-6. **Deploy**. Approve the permission prompt (choose your account →
-   "Advanced" → "Go to <project> (unsafe)" → Allow — it's your own script).
-7. Copy the **Web app URL** (ends in `/exec`).
-8. In `index.html`, set `SHEET_ENDPOINT` to that URL (search for
-   `REPLACE_WITH_APPS_SCRIPT_URL`), commit, and push.
+```js
+function doPost(e) {
+  var lock = LockService.getScriptLock();
+  lock.tryLock(10000);
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var p = (e && e.parameter) || {};
+
+    if (p.type === 'visit') {
+      var v = ss.getSheetByName('Visits') || ss.insertSheet('Visits');
+      if (v.getLastRow() === 0) {
+        v.appendRow(['Timestamp', 'Page', 'Referrer', 'Returning', 'Visitor', 'Screen', 'Language', 'User agent']);
+      }
+      v.appendRow([new Date(), p.page || '', p.ref || '', p.returning || '', p.visitor || '', p.screen || '', p.lang || '', p.ua || '']);
+    } else {
+      var s = ss.getSheetByName('Signups') || ss.insertSheet('Signups');
+      if (s.getLastRow() === 0) {
+        s.appendRow(['Timestamp', 'Email', 'Source', 'Page']);
+      }
+      s.appendRow([new Date(), p.email || '', p.source || '', p.page || '']);
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ ok: false, error: String(err) }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } finally {
+    lock.releaseLock();
+  }
+}
+```
+
+Save, then **Deploy → Manage deployments → (pencil / edit) → Version:
+*New version* → Deploy**. The web-app URL stays the same.
+
+### First-time deploy (only if starting from scratch)
+
+1. New Google Sheet at https://sheets.new.
+2. **Extensions → Apps Script**, paste the code above, Save.
+3. **Deploy → New deployment** → gear → **Web app**. Execute as **Me**,
+   Who has access **Anyone**. Deploy, approve the permission prompt
+   (your account → "Advanced" → "Go to … (unsafe)" → Allow).
+4. Copy the **Web app URL** (ends in `/exec`).
+5. Put that URL in `index.html` (`SHEET_ENDPOINT`) and in the tracking
+   `<script>` (`EP`) at the bottom of every `*.html` file, commit, push.
 
 Open the Sheet any time, or **File → Download → Microsoft Excel (.xlsx)**.
 
-If you ever change the Apps Script, use **Deploy → Manage deployments →
-edit → Version: New version** so the same URL keeps working.
+### Notes on visit tracking
+
+- Fires once per browser session (uses `sessionStorage`), so it counts
+  visits, not every page view. To log every page view instead, remove the
+  `if (sessionStorage.getItem('kf_seen')) return;` guard in the tracking
+  script.
+- No cookies, no IP address, no third-party analytics — just what the
+  browser exposes (page, referrer, screen size, language, user agent) plus
+  a random first-party `visitor` id in `localStorage`.

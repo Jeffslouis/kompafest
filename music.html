@@ -689,5 +689,31 @@
     <a href="index.html#priority" class="btn-primary">Join Priority List →</a>
   </div>
 
+  <script>
+  /* First-visit-per-session tracking -> Google Sheet ("Visits" tab). See README.md. */
+  (function(){
+    try{
+      if(sessionStorage.getItem('kf_seen')) return;
+      sessionStorage.setItem('kf_seen','1');
+      var EP = "https://script.google.com/macros/s/AKfycbzjebDz0-8XPfd9bsHssr-OOb6SyrRzm_DJa7Yj5ArvRzJE12uGOXbJuOMlYexkcQPH_w/exec";
+      var vid = localStorage.getItem('kf_vid');
+      var returning = !!vid;
+      if(!vid){ vid = Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('kf_vid', vid); }
+      var d = new URLSearchParams({
+        type: 'visit',
+        page: location.pathname,
+        ref: document.referrer || '(direct)',
+        visitor: vid,
+        returning: returning ? 'yes' : 'no',
+        screen: (window.screen ? screen.width + 'x' + screen.height : ''),
+        lang: navigator.language || '',
+        ua: navigator.userAgent || ''
+      });
+      if(navigator.sendBeacon){ navigator.sendBeacon(EP, d); }
+      else { fetch(EP, { method:'POST', mode:'no-cors', body:d, keepalive:true }); }
+    }catch(e){}
+  })();
+  </script>
+
 </body>
 </html>
