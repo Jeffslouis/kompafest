@@ -10,7 +10,7 @@
 <style>
   :root{
     --ink:#0A1422;
-    --ink-2:#0F1E30;
+    --ink-2:#15283F;
     --ember:#E0392B;
     --gold:#F6B33E;
     --lagoon:#2E7FB5;
@@ -519,7 +519,7 @@
   .raffle{
     background:
       radial-gradient(120% 140% at 12% 0%, rgba(246,179,62,0.16), transparent 55%),
-      linear-gradient(180deg, var(--ink-2), var(--ink));
+      var(--ink-2);
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
     padding:72px 0 76px;
@@ -615,7 +615,12 @@
   .popup-msg.is-err{ color:var(--ember); }
 
   /* --- Sponsor teaser --- */
-  .sponsor-teaser{ background:var(--ink-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:88px 0; }
+  .sponsor-teaser{ background:var(--ink); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:88px 0; }
+  .sponsor-teaser .sp-card{ background:var(--ink-2); }
+
+  /* alternating section bands */
+  #included, #itinerary{ background:var(--ink); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  #experience{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
   .sponsor-teaser .eyebrow{ margin-bottom:16px; }
   .sponsor-teaser .eyebrow .dot{ background:var(--lagoon); }
   .sponsor-points{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-bottom:26px; }
