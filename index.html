@@ -493,8 +493,107 @@
   }
 
   /* --- KompaFest logo treatment --- */
-  .logo img{ background:#fff; border-radius:9px; padding:5px 10px; height:34px; width:auto; }
-  footer .logo img{ padding:6px 12px; height:40px; }
+  .logo img{ height:34px; width:auto; filter:drop-shadow(0 1px 5px rgba(0,0,0,0.55)); }
+  footer .logo img{ height:44px; }
+
+  /* --- Free Cabin Raffle --- */
+  .raffle{
+    background:
+      radial-gradient(120% 140% at 12% 0%, rgba(246,179,62,0.16), transparent 55%),
+      linear-gradient(180deg, var(--ink-2), var(--ink));
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:72px 0 76px;
+  }
+  .raffle-inner{ max-width:1100px; }
+  .raffle .eyebrow .dot{ background:var(--gold); }
+  .raffle-title{
+    font-size:clamp(34px, 6vw, 62px);
+    color:var(--paper);
+    margin-top:6px;
+  }
+  .raffle-title em{ font-style:normal; color:var(--gold); }
+  .raffle-sub{
+    max-width:540px; margin-top:16px;
+    font-size:16px; line-height:1.6;
+    color:rgba(var(--paper-rgb),0.72);
+  }
+  .raffle-grid{
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:28px;
+    margin-top:40px; align-items:start;
+  }
+  .raffle-steps{ list-style:none; display:grid; gap:14px; }
+  .raffle-steps li{
+    display:flex; gap:16px;
+    background:rgba(var(--paper-rgb),0.04);
+    border:1px solid var(--line);
+    border-radius:16px; padding:20px 22px;
+  }
+  .raffle-steps .step-n{
+    flex-shrink:0;
+    width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--ember); color:var(--ink);
+    font-family:'Anton',sans-serif; font-size:17px;
+  }
+  .raffle-steps strong{ display:block; font-size:15.5px; color:var(--paper); }
+  .raffle-steps p{ margin-top:5px; font-size:13.5px; line-height:1.55; color:rgba(var(--paper-rgb),0.6); }
+  .raffle-steps a{ color:var(--gold); }
+  .raffle-step-cta{
+    display:inline-flex; margin-top:12px;
+    background:none; border:1px solid rgba(var(--paper-rgb),0.35);
+    color:var(--paper); cursor:pointer;
+    font-family:'Space Mono',monospace; font-size:11.5px; font-weight:700;
+    letter-spacing:0.06em; text-transform:uppercase;
+    padding:8px 14px; border-radius:100px;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .raffle-step-cta:hover{ border-color:var(--paper); background:rgba(var(--paper-rgb),0.08); }
+  .raffle-countdown{
+    background:var(--ink);
+    border:1px solid var(--line);
+    border-radius:16px; padding:22px;
+    text-align:center;
+  }
+  .rc-label{
+    font-family:'Space Mono',monospace; font-size:11px; font-weight:700;
+    letter-spacing:0.09em; text-transform:uppercase; color:var(--gold);
+    display:block;
+  }
+  .rc-nums{ display:flex; justify-content:center; gap:10px; margin:16px 0 14px; }
+  .rc-nums > div{
+    flex:1; max-width:76px;
+    background:rgba(var(--paper-rgb),0.05);
+    border:1px solid var(--line); border-radius:10px;
+    padding:12px 4px;
+  }
+  .rc-nums b{
+    display:block; font-family:'Anton',sans-serif; font-weight:400;
+    font-size:clamp(22px,6vw,30px); color:var(--paper); line-height:1;
+  }
+  .rc-nums i{
+    display:block; margin-top:6px; font-style:normal;
+    font-family:'Space Mono',monospace; font-size:9.5px;
+    letter-spacing:0.08em; text-transform:uppercase; color:rgba(var(--paper-rgb),0.5);
+  }
+  .rc-fine{ font-size:12px; line-height:1.55; color:rgba(var(--paper-rgb),0.55); }
+  .raffle-actions{
+    display:flex; flex-wrap:wrap; gap:14px; align-items:center;
+    margin-top:34px;
+  }
+  .raffle-rules{ margin-top:18px; font-size:12.5px; color:rgba(var(--paper-rgb),0.5); }
+  .raffle-rules a{ color:rgba(var(--paper-rgb),0.75); text-decoration:underline; }
+  @media (max-width:820px){
+    .raffle{ padding:52px 0 56px; }
+    .raffle-grid{ grid-template-columns:1fr; gap:18px; margin-top:30px; }
+    .raffle-actions .btn-primary,
+    .raffle-actions .btn-ghost{ width:100%; justify-content:center; }
+  }
+
+  /* Priority popup — submit feedback */
+  .popup-msg{ margin-top:14px; font-size:13.5px; line-height:1.5; }
+  .popup-msg.is-ok{ color:var(--gold); }
+  .popup-msg.is-err{ color:var(--ember); }
 </style>
 </head>
 <body>
@@ -503,12 +602,12 @@
     <div class="ticker-track">
       <span>4 NIGHTS AT SEA</span>
       <span>NONSTOP KOMPA</span>
-      <span>BOOKINGS OPEN AUG 15</span>
+      <span>BOOKINGS OPEN 2027</span>
       <span>ELITE DJ LINEUP</span>
       <span>ISLAND STOPS INCLUDED</span>
       <span>4 NIGHTS AT SEA</span>
       <span>NONSTOP KOMPA</span>
-      <span>BOOKINGS OPEN AUG 15</span>
+      <span>BOOKINGS OPEN 2027</span>
       <span>ELITE DJ LINEUP</span>
       <span>ISLAND STOPS INCLUDED</span>
     </div>
@@ -516,7 +615,7 @@
 
   <nav>
     <div class="nav-row wrap" style="padding-left:0; padding-right:0;">
-      <a href="index.html" class="logo"><img src="images/logo.webp" alt="KompaFest Cruise" style="height:42px; width:auto;"></a>
+      <a href="index.html" class="logo"><img src="images/logo.webp" alt="KompaFest Cruise" style="height:46px; width:auto;"></a>
       <div class="nav-links">
         <a href="#experience">Experience</a>
         <a href="#included">What's Included</a>
@@ -525,7 +624,7 @@
         <a href="music.html">Music</a>
       </div>
       <a href="sponsor.html" class="nav-sponsor-btn">Sponsor</a>
-      <a href="#book" class="nav-cta">Join Priority List</a>
+      <a href="#priority" class="nav-cta" data-priority>Join Priority List</a>
     </div>
   </nav>
 
@@ -536,13 +635,59 @@
     <div class="hero-content wrap">
       <div class="eyebrow"><span class="dot"></span>KompaFest Cruise — 2028 Voyage</div>
       <h1>The vibe you<br>don't want to<br><em>miss.</em></h1>
-      <p class="hero-sub">Four nights, one ship, nonstop Kompa. This is the trip you plan your whole year around. Bookings open August 15th.</p>
+      <p class="hero-sub">Four nights, one ship, nonstop Kompa. This is the trip you plan your whole year around. Bookings open in 2027.</p>
       <div class="hero-actions">
-        <button class="btn-primary">Join the Priority List →</button>
+        <button class="btn-primary" data-priority>Join the Priority List →</button>
         <a href="#itinerary" class="btn-ghost">View Itinerary</a>
       </div>
     </div>
   </header>
+
+  <section class="raffle" id="raffle">
+    <div class="wrap raffle-inner">
+      <div class="eyebrow"><span class="dot"></span>Free Cabin Raffle</div>
+      <h2 class="raffle-title">3 Free Cabins<br><em>up for grabs</em></h2>
+      <p class="raffle-sub">KompaFest Cruise is putting three cabins on the 2028 voyage up for a free raffle. Get on the priority list, share the movement, and you're entered — no purchase necessary.</p>
+
+      <div class="raffle-grid">
+        <ol class="raffle-steps">
+          <li>
+            <span class="step-n">1</span>
+            <div>
+              <strong>Join the priority list</strong>
+              <p>Drop your email below — that's your entry. Takes ten seconds.</p>
+              <button type="button" class="raffle-step-cta" data-priority>Sign up →</button>
+            </div>
+          </li>
+          <li>
+            <span class="step-n">2</span>
+            <div>
+              <strong>Share our Instagram to your Story</strong>
+              <p>Post <a href="https://www.instagram.com/kompafest_official/" target="_blank" rel="noopener noreferrer">@kompafest_official</a> to your Instagram Story and keep it up for 24 hours.</p>
+              <a class="raffle-step-cta" href="https://www.instagram.com/kompafest_official/" target="_blank" rel="noopener noreferrer">Open Instagram →</a>
+            </div>
+          </li>
+        </ol>
+
+        <div class="raffle-countdown">
+          <span class="rc-label">Drawing · December 25, 2026</span>
+          <div class="rc-nums" data-raffle-target="2026-12-25T12:00:00">
+            <div><b data-rc="days">00</b><i>Days</i></div>
+            <div><b data-rc="hours">00</b><i>Hrs</i></div>
+            <div><b data-rc="mins">00</b><i>Min</i></div>
+            <div><b data-rc="secs">00</b><i>Sec</i></div>
+          </div>
+          <p class="rc-fine">3 winners drawn at random. Prize covers cabin fare only — airfare, taxes, port fees, gratuities and add-ons are not included.</p>
+        </div>
+      </div>
+
+      <div class="raffle-actions">
+        <button type="button" class="btn-primary" data-priority>Enter the Raffle →</button>
+        <a class="btn-ghost" href="https://www.instagram.com/kompafest_official/" target="_blank" rel="noopener noreferrer">Follow us on Instagram</a>
+      </div>
+      <p class="raffle-rules"><a href="raffle-rules.html">Official raffle rules</a> — no purchase necessary, void where prohibited. See rules for eligibility, entry limits, and full terms.</p>
+    </div>
+  </section>
 
   <div class="manifest">
     <div class="manifest-inner wrap" style="padding-left:0; padding-right:0;">
@@ -552,7 +697,7 @@
       </div>
       <div class="manifest-cell">
         <span class="label">Sail Date</span>
-        <div class="value">March 2028 <small>Exact dates TBA</small></div>
+        <div class="value">2028 <small>Exact dates TBA</small></div>
       </div>
       <div class="manifest-cell">
         <span class="label">Stops</span>
@@ -560,11 +705,11 @@
       </div>
       <div class="manifest-cell">
         <span class="label">Deposit</span>
-        <div class="value">$150 pp <small>Locks priority booking</small></div>
+        <div class="value">$250 pp <small>Locks priority booking</small></div>
       </div>
       <div class="manifest-cell">
         <span class="label">Status</span>
-        <div class="value" style="color:var(--gold)">Opens Aug 15 <small>Cabins are limited</small></div>
+        <div class="value" style="color:var(--gold)">Opens 2027 <small>Cabins are limited</small></div>
       </div>
     </div>
   </div>
@@ -698,7 +843,7 @@
           <div class="who">— Presale priority</div>
         </div>
         <div class="quote-card">
-          <p>$150 holds your spot. It's fully refundable for 14 days after we announce the ship.</p>
+          <p>$250 holds your spot. It's fully refundable for 14 days after we announce the ship.</p>
           <div class="who">— Deposit protected</div>
         </div>
       </div>
@@ -716,7 +861,7 @@
     <div class="wrap">
       <div class="foot-grid">
         <div>
-          <div class="logo" style="margin-bottom:14px;"><img src="images/logo.webp" alt="KompaFest Cruise" style="height:48px; width:auto;"></div>
+          <div class="logo" style="margin-bottom:14px;"><img src="images/logo.webp" alt="KompaFest Cruise" style="height:52px; width:auto;"></div>
           <p style="font-size:14px; color:rgba(var(--paper-rgb),0.55); max-width:280px; line-height:1.6;">Don't watch this on social media next year. Be there — or hear about it later.</p>
         </div>
         <div>
@@ -748,7 +893,7 @@
         <div>
           <h4>Get on the list</h4>
           <p style="font-size:13.5px; color:rgba(var(--paper-rgb),0.55); margin-bottom:14px;">Be first to know when cabins and prices drop.</p>
-          <button class="btn-primary" style="width:100%; justify-content:center;">Join Priority List</button>
+          <button class="btn-primary" style="width:100%; justify-content:center;" data-priority>Join Priority List</button>
         </div>
       </div>
       <div class="foot-bottom">
@@ -760,10 +905,10 @@
 
   <div class="book-bar">
     <div class="info">
-      <div class="price">$150<small>Deposit per person</small></div>
-      <div class="book-bar-text">Bookings open August 15 — cabins are limited.</div>
+      <div class="price">$250<small>Deposit per person</small></div>
+      <div class="book-bar-text">Bookings open in 2027 — cabins are limited.</div>
     </div>
-    <button class="btn-primary">Join Priority List →</button>
+    <button class="btn-primary" data-priority>Join Priority List →</button>
   </div>
 
   <div class="popup-overlay" id="priorityPopup">
@@ -780,27 +925,109 @@
         <li>✅ VIP giveaways and launch updates</li>
       </ul>
       <p class="popup-urgency">Booking opens soon! Priority list members get first access before the public!</p>
-      <form class="popup-form" onsubmit="event.preventDefault(); alert('This is a demo form — connect it to your form handler of choice.'); document.getElementById('priorityPopup').classList.remove('is-open');">
-        <input type="email" placeholder="Email" required>
+      <form class="popup-form" id="priorityForm">
+        <input type="email" name="email" placeholder="Your email" required autocomplete="email">
+        <input type="hidden" name="_subject" value="New KompaFest Cruise priority-list signup">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
         <button type="submit" class="btn-primary">Get Access →</button>
       </form>
+      <p class="popup-msg" id="priorityMsg" role="status" hidden></p>
     </div>
   </div>
 
   <script>
     (function(){
+      /* ============================================================
+         PRIORITY LIST EMAIL CAPTURE  (FormSubmit.co — no account)
+         Replace the address below with the inbox that should receive
+         signups. The FIRST submission triggers a one-time confirmation
+         email from FormSubmit — click the link in it once, and every
+         signup after that is delivered automatically.
+         ============================================================ */
+      var FORM_EMAIL = "REPLACE_WITH_YOUR@EMAIL.COM";
+      var ENDPOINT = "https://formsubmit.co/ajax/" + encodeURIComponent(FORM_EMAIL);
+
       var popup = document.getElementById('priorityPopup');
       var closeBtn = document.getElementById('priorityPopupClose');
+      var form = document.getElementById('priorityForm');
+      var msg = document.getElementById('priorityMsg');
+
+      function open(){ if(popup){ popup.classList.add('is-open'); } }
+      function dismiss(){ if(popup){ popup.classList.remove('is-open'); localStorage.setItem('priorityPopupDismissed', '1'); } }
+
+      /* open triggers: any [data-priority] control, or #priority in the URL */
+      document.querySelectorAll('[data-priority]').forEach(function(el){
+        el.addEventListener('click', function(e){ e.preventDefault(); open(); });
+      });
+      if(location.hash === '#priority') open();
+
+      /* gentle auto-open once per visitor */
       if(popup && !localStorage.getItem('priorityPopupDismissed')){
-        setTimeout(function(){ popup.classList.add('is-open'); }, 3000);
-      }
-      function dismiss(){
-        if(!popup) return;
-        popup.classList.remove('is-open');
-        localStorage.setItem('priorityPopupDismissed', '1');
+        setTimeout(open, 6000);
       }
       if(closeBtn) closeBtn.addEventListener('click', dismiss);
       if(popup) popup.addEventListener('click', function(e){ if(e.target === popup) dismiss(); });
+      document.addEventListener('keydown', function(e){ if(e.key === 'Escape') dismiss(); });
+
+      /* submit */
+      if(form){
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          var btn = form.querySelector('button[type="submit"]');
+          if(msg){ msg.hidden = true; msg.className = 'popup-msg'; }
+          if(FORM_EMAIL.indexOf('REPLACE_WITH_YOUR') === 0){
+            if(msg){ msg.textContent = 'Signup isn’t connected yet — check back soon.'; msg.classList.add('is-err'); msg.hidden = false; }
+            return;
+          }
+          btn.disabled = true; var label = btn.textContent; btn.textContent = 'Sending…';
+          fetch(ENDPOINT, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: form.email.value,
+              _subject: 'New KompaFest Cruise priority-list signup',
+              _template: 'table'
+            })
+          }).then(function(r){ return r.json(); }).then(function(){
+            form.hidden = true;
+            if(msg){ msg.textContent = 'You’re on the list — we’ll be in touch. 🌴'; msg.classList.add('is-ok'); msg.hidden = false; }
+          }).catch(function(){
+            btn.disabled = false; btn.textContent = label;
+            if(msg){ msg.textContent = 'Something went wrong. Please try again.'; msg.classList.add('is-err'); msg.hidden = false; }
+          });
+        });
+      }
+    })();
+  </script>
+
+  <script>
+    /* Free Cabin Raffle — countdown to the drawing */
+    (function(){
+      var box = document.querySelector('.rc-nums');
+      if(!box) return;
+      var target = new Date(box.getAttribute('data-raffle-target')).getTime();
+      var els = {
+        days: box.querySelector('[data-rc="days"]'),
+        hours: box.querySelector('[data-rc="hours"]'),
+        mins: box.querySelector('[data-rc="mins"]'),
+        secs: box.querySelector('[data-rc="secs"]')
+      };
+      function pad(n){ return String(n).padStart(2, '0'); }
+      function tick(){
+        var diff = target - Date.now();
+        if(diff <= 0){
+          els.days.textContent = els.hours.textContent = els.mins.textContent = els.secs.textContent = '00';
+          box.classList.add('is-done');
+          clearInterval(timer);
+          return;
+        }
+        els.days.textContent = pad(Math.floor(diff / 86400000));
+        els.hours.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+        els.mins.textContent = pad(Math.floor((diff % 3600000) / 60000));
+        els.secs.textContent = pad(Math.floor((diff % 60000) / 1000));
+      }
+      tick();
+      var timer = setInterval(tick, 1000);
     })();
   </script>
 
