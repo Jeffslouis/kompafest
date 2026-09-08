@@ -397,6 +397,7 @@
   .book-bar .price small{ font-family:'Manrope',sans-serif; font-size:11px; color:rgba(var(--paper-rgb),0.5); display:block; font-weight:600; }
   .book-bar-text{ font-size:13px; color:rgba(var(--paper-rgb),0.6); display:none; }
   @media (min-width:640px){ .book-bar-text{ display:block; } }
+  @media (max-width:640px){ .book-bar{ justify-content:center; } .book-bar .info{ display:none; } .book-bar .btn-primary{ width:100%; justify-content:center; } }
 
   ::selection{ background:var(--ember); color:var(--ink); }
 
@@ -601,7 +602,6 @@
 
   <div class="book-bar">
     <div class="info">
-      <div class="price">$250<small>Deposit per person</small></div>
       <div class="book-bar-text">Bookings open in 2027 — cabins are limited.</div>
     </div>
     <a href="index.html#priority" class="btn-primary">Join Priority List →</a>
