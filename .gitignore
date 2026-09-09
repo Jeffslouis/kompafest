@@ -2,3 +2,8 @@
 screenshots/
 
 images/Logo_/
+
+# Large source media kept locally, not deployed to Pages
+/CrusieVid.mp4
+/*.mov
+/*.MOV
