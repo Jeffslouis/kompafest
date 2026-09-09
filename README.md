@@ -8,16 +8,18 @@ Marketing site for KompaFest Cruise. Static HTML, served via GitHub Pages at htt
 - `images/` — assets (`logo.webp` is the footer mark; the header uses a CSS wordmark)
 - `screenshot.py` — local viewport screenshot helper
 
-## Google Sheet: signups + visits
+## Google Sheet: signups + visits + questions
 
 One Google Apps Script web app (URL is `SHEET_ENDPOINT` in `index.html`, and
-`EP` in the small tracking `<script>` on every page) writes to two tabs in a
-Google Sheet you own:
+`EP` in the tracking `<script>` on every page and in the "Ask a question"
+form on `faq.html`) writes to three tabs in a Google Sheet you own:
 
-- **Signups** — `Timestamp | Email | Source | Page` (from the priority
-  popup and the "Be first to know" mailing form)
+- **Signups** — `Timestamp | Email | Source | Page` (priority popup and the
+  "Be first to know" mailing form)
 - **Visits** — `Timestamp | Page | Referrer | Returning | Visitor | Screen | Language | User agent`
   (one row the first time each browser session lands on the site)
+- **Questions** — `Timestamp | Name | Email | Message | Page` (the "Still
+  have a question?" form on the FAQ page)
 
 ### Apps Script code
 
@@ -30,20 +32,25 @@ function doPost(e) {
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var p = (e && e.parameter) || {};
+    var type = (p.type || 'signup').toLowerCase();
 
-    if (p.type === 'visit') {
-      var v = ss.getSheetByName('Visits') || ss.insertSheet('Visits');
-      if (v.getLastRow() === 0) {
-        v.appendRow(['Timestamp', 'Page', 'Referrer', 'Returning', 'Visitor', 'Screen', 'Language', 'User agent']);
-      }
-      v.appendRow([new Date(), p.page || '', p.ref || '', p.returning || '', p.visitor || '', p.screen || '', p.lang || '', p.ua || '']);
-    } else {
-      var s = ss.getSheetByName('Signups') || ss.insertSheet('Signups');
-      if (s.getLastRow() === 0) {
-        s.appendRow(['Timestamp', 'Email', 'Source', 'Page']);
-      }
-      s.appendRow([new Date(), p.email || '', p.source || '', p.page || '']);
+    var TABS = {
+      signup:   { name: 'Signups',   cols: ['email', 'source', 'page'] },
+      visit:    { name: 'Visits',    cols: ['page', 'ref', 'returning', 'visitor', 'screen', 'lang', 'ua'] },
+      question: { name: 'Questions', cols: ['name', 'email', 'message', 'page'] }
+    };
+    var cfg = TABS[type] || {
+      name: type.charAt(0).toUpperCase() + type.slice(1),
+      cols: Object.keys(p).filter(function (k) { return k !== 'type'; })
+    };
+
+    var sheet = ss.getSheetByName(cfg.name) || ss.insertSheet(cfg.name);
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(['Timestamp'].concat(cfg.cols.map(function (c) {
+        return c.charAt(0).toUpperCase() + c.slice(1);
+      })));
     }
+    sheet.appendRow([new Date()].concat(cfg.cols.map(function (c) { return p[c] || ''; })));
 
     return ContentService.createTextOutput(JSON.stringify({ ok: true }))
       .setMimeType(ContentService.MimeType.JSON);
