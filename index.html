@@ -1124,7 +1124,7 @@
          Setup steps are in README.md. Every signup appends a row:
          Timestamp | Email | Source | Page
          ============================================================ */
-      var SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbydAVmeDWMMi8b1JzcmaKUnw6U0l7tJIFnI-VP6x4oE_5WfHxSLotnpk7b4-3pMKSQh-w/exec";
+      var SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbzX_3jB0b6UYzQB6u7Q5A5ohLxPfQbNIQrRuucQSrdosaS-r1pPx-TY6nwYvaku5TH8/exec";
 
       /* ---- shared signup handler (popup + inline mailing form) ---- */
       function wireSignup(opts){
@@ -1244,7 +1244,7 @@
     try{
       if(sessionStorage.getItem('kf_seen')) return;
       sessionStorage.setItem('kf_seen','1');
-      var EP = "https://script.google.com/macros/s/AKfycbydAVmeDWMMi8b1JzcmaKUnw6U0l7tJIFnI-VP6x4oE_5WfHxSLotnpk7b4-3pMKSQh-w/exec";
+      var EP = "https://script.google.com/macros/s/AKfycbzX_3jB0b6UYzQB6u7Q5A5ohLxPfQbNIQrRuucQSrdosaS-r1pPx-TY6nwYvaku5TH8/exec";
       var vid = localStorage.getItem('kf_vid');
       var returning = !!vid;
       if(!vid){ vid = Date.now().toString(36) + Math.random().toString(36).slice(2,8); localStorage.setItem('kf_vid', vid); }
