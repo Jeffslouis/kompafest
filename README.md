@@ -59,13 +59,16 @@ function doPost(e) {
     }
     sheet.appendRow([new Date()].concat(cfg.cols.map(function (c) { return p[c] || ''; })));
 
-    // email a copy for inquiries that need a human reply
+    // email a copy for inquiries that need a human reply (best-effort;
+    // the row is already saved even if mail is not authorized yet)
     var NOTIFY = { sponsor: 1, question: 1 };
     if (NOTIFY[type]) {
-      var body = cfg.cols.map(function (c) { return c + ': ' + (p[c] || ''); }).join('\n');
-      MailApp.sendEmail('contact@kompafestcruise.com',
-        'New ' + type + ' inquiry: KompaFest Cruise',
-        body + '\n\n(Logged to the "' + cfg.name + '" tab.)');
+      try {
+        var body = cfg.cols.map(function (c) { return c + ': ' + (p[c] || ''); }).join('\n');
+        MailApp.sendEmail('contact@kompafestcruise.com',
+          'New ' + type + ' inquiry: KompaFest Cruise',
+          body + '\n\n(Logged to the "' + cfg.name + '" tab.)');
+      } catch (mailErr) {}
     }
 
     return ContentService.createTextOutput(JSON.stringify({ ok: true }))
@@ -80,10 +83,22 @@ function doPost(e) {
 ```
 
 Save, then **Deploy → Manage deployments → (pencil / edit) → Version:
-*New version* → Deploy**. Keep the web-app URL the same. Because the script
-now sends email, the first deploy after this change asks for an extra
-permission — approve it. `contact@kompafestcruise.com` should be an address
-you can actually receive at (forwarding is fine).
+*New version* → Deploy**. Keep the web-app URL the same.
+
+**Authorize email (one time).** Deploying does not grant the send-mail
+permission on its own. In the Apps Script editor, paste this helper, pick
+`authorizeEmail` in the function dropdown, click **Run**, and approve the
+prompt (your account → "Advanced" → "Go to … (unsafe)" → Allow):
+
+```js
+function authorizeEmail() {
+  MailApp.sendEmail(Session.getEffectiveUser().getEmail(), 'KompaFest: mail authorized', 'ok');
+}
+```
+
+Until that is done, sponsor/question rows still save to the Sheet, they
+just are not emailed. `contact@kompafestcruise.com` should be an address you
+can actually receive at (forwarding is fine).
 
 ### First-time deploy (only if starting from scratch)
 
