@@ -517,6 +517,7 @@
 @media (max-width:820px){ .step-grid{grid-template-columns:1fr;} }
 
 .app-form{ display:grid; gap:16px; max-width:620px; }
+.form-msg{ font-size:14px; font-weight:600; margin-top:4px; }
 .app-form .row2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
 .app-form label{
   font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.05em; text-transform:uppercase;
@@ -664,22 +665,56 @@
         <h2>Sponsorship<br>inquiry</h2>
         <p>Tell us about your brand. We reply to every inquiry personally, with no automated sales funnel.</p>
       </div>
-      <form class="app-form" onsubmit="event.preventDefault(); alert('This is a demo form. Connect it to your form handler of choice.');">
+      <form class="app-form" id="sponsorForm">
         <div class="row2">
-          <div><label>Company Name</label><input type="text" placeholder="Your company" required></div>
-          <div><label>Contact Name</label><input type="text" placeholder="Your name" required></div>
+          <div><label for="spCompany">Company Name</label><input id="spCompany" name="company" type="text" placeholder="Your company" required></div>
+          <div><label for="spContact">Contact Name</label><input id="spContact" name="contact" type="text" placeholder="Your name" required></div>
         </div>
         <div class="row2">
-          <div><label>Email</label><input type="email" placeholder="you@company.com" required></div>
-          <div><label>Company Website</label><input type="text" placeholder="yourcompany.com"></div>
+          <div><label for="spEmail">Email</label><input id="spEmail" name="email" type="email" placeholder="you@company.com" required></div>
+          <div><label for="spSite">Company Website</label><input id="spSite" name="website" type="text" placeholder="yourcompany.com"></div>
         </div>
         <div>
-          <label>Package interest</label>
-          <select><option>Not sure yet</option><option>Wave Partner</option><option>Reef Partner</option><option>Anchor Sponsor (Title)</option></select>
+          <label for="spPackage">Package interest</label>
+          <select id="spPackage" name="package"><option>Not sure yet</option><option>Wave Partner</option><option>Reef Partner</option><option>Anchor Sponsor (Title)</option></select>
         </div>
-        <div><label>Tell us about your brand</label><textarea placeholder="What you're hoping to get out of sponsoring, and any activation ideas..."></textarea></div>
-        <button type="submit" class="btn-primary" style="justify-self:start;">Submit Inquiry →</button>
+        <div><label for="spMsg">Tell us about your brand</label><textarea id="spMsg" name="message" placeholder="What you're hoping to get out of sponsoring, and any activation ideas..."></textarea></div>
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
+        <button type="submit" class="btn-primary" style="justify-self:start;">Submit Inquiry &rarr;</button>
+        <p class="form-msg" id="sponsorMsg" role="status" hidden></p>
       </form>
+      <script>
+        (function(){
+          var EP = "https://script.google.com/macros/s/AKfycbzX_3jB0b6UYzQB6u7Q5A5ohLxPfQbNIQrRuucQSrdosaS-r1pPx-TY6nwYvaku5TH8/exec";
+          var form = document.getElementById('sponsorForm');
+          var out = document.getElementById('sponsorMsg');
+          if(!form) return;
+          function show(t, err){ out.textContent = t; out.hidden = false; out.style.color = err ? 'var(--ember)' : 'var(--gold)'; }
+          form.addEventListener('submit', function(e){
+            e.preventDefault();
+            if(form._honey && form._honey.value){ show('Thanks. We’ll be in touch.', false); return; }
+            var btn = form.querySelector('button[type="submit"]');
+            var label = btn.textContent;
+            btn.disabled = true; btn.textContent = 'Sending…';
+            fetch(EP, { method:'POST', mode:'no-cors', body:new URLSearchParams({
+              type: 'sponsor',
+              company: form.company.value,
+              contact: form.contact.value,
+              email: form.email.value,
+              website: form.website.value,
+              package: form.package.value,
+              message: form.message.value,
+              page: location.pathname
+            })}).then(function(){
+              form.querySelectorAll('input,textarea,select,button').forEach(function(el){ el.disabled = true; });
+              show('Thanks. We got your inquiry and will reply personally by email.', false);
+            }).catch(function(){
+              btn.disabled = false; btn.textContent = label;
+              show('Something went wrong. Please email contact@kompafestcruise.com.', true);
+            });
+          });
+        })();
+      </script>
     </div>
   </section>
 

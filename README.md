@@ -8,18 +8,24 @@ Marketing site for KompaFest Cruise. Static HTML, served via GitHub Pages at htt
 - `images/` — assets (`logo.webp` is the footer mark; the header uses a CSS wordmark)
 - `screenshot.py` — local viewport screenshot helper
 
-## Google Sheet: signups + visits + questions
+## Google Sheet: signups + visits + questions + sponsors
 
 One Google Apps Script web app (URL is `SHEET_ENDPOINT` in `index.html`, and
-`EP` in the tracking `<script>` on every page and in the "Ask a question"
-form on `faq.html`) writes to three tabs in a Google Sheet you own:
+`EP` in the tracking `<script>` on every page, the "Ask a question" form on
+`faq.html`, and the sponsor form on `sponsor.html`) writes to a Google Sheet
+you own, one tab per submission type:
 
 - **Signups** — `Timestamp | Email | Source | Page` (priority popup and the
   "Be first to know" mailing form)
-- **Visits** — `Timestamp | Page | Referrer | Returning | Visitor | Screen | Language | User agent`
+- **Visits** — `Timestamp | Page | Ref | Returning | Visitor | Screen | Lang | Ua`
   (one row the first time each browser session lands on the site)
 - **Questions** — `Timestamp | Name | Email | Message | Page` (the "Still
   have a question?" form on the FAQ page)
+- **Sponsors** — `Timestamp | Company | Contact | Email | Website | Package | Message | Page`
+  (the sponsorship inquiry form)
+
+`question` and `sponsor` submissions are also emailed to
+`contact@kompafestcruise.com`.
 
 ### Apps Script code
 
@@ -37,7 +43,8 @@ function doPost(e) {
     var TABS = {
       signup:   { name: 'Signups',   cols: ['email', 'source', 'page'] },
       visit:    { name: 'Visits',    cols: ['page', 'ref', 'returning', 'visitor', 'screen', 'lang', 'ua'] },
-      question: { name: 'Questions', cols: ['name', 'email', 'message', 'page'] }
+      question: { name: 'Questions', cols: ['name', 'email', 'message', 'page'] },
+      sponsor:  { name: 'Sponsors',  cols: ['company', 'contact', 'email', 'website', 'package', 'message', 'page'] }
     };
     var cfg = TABS[type] || {
       name: type.charAt(0).toUpperCase() + type.slice(1),
@@ -52,6 +59,15 @@ function doPost(e) {
     }
     sheet.appendRow([new Date()].concat(cfg.cols.map(function (c) { return p[c] || ''; })));
 
+    // email a copy for inquiries that need a human reply
+    var NOTIFY = { sponsor: 1, question: 1 };
+    if (NOTIFY[type]) {
+      var body = cfg.cols.map(function (c) { return c + ': ' + (p[c] || ''); }).join('\n');
+      MailApp.sendEmail('contact@kompafestcruise.com',
+        'New ' + type + ' inquiry: KompaFest Cruise',
+        body + '\n\n(Logged to the "' + cfg.name + '" tab.)');
+    }
+
     return ContentService.createTextOutput(JSON.stringify({ ok: true }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
@@ -64,7 +80,10 @@ function doPost(e) {
 ```
 
 Save, then **Deploy → Manage deployments → (pencil / edit) → Version:
-*New version* → Deploy**. The web-app URL stays the same.
+*New version* → Deploy**. Keep the web-app URL the same. Because the script
+now sends email, the first deploy after this change asks for an extra
+permission — approve it. `contact@kompafestcruise.com` should be an address
+you can actually receive at (forwarding is fine).
 
 ### First-time deploy (only if starting from scratch)
 
