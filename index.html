@@ -77,13 +77,13 @@
     padding-top:18px; padding-bottom:18px;
   }
   .brand{ display:flex; align-items:center; gap:10px; }
-  .brand img{ height:50px; width:auto; }
+  .brand img{ height:64px; width:64px; aspect-ratio:1/1; object-fit:contain; }
   .brand-word{
     font-family:'Anton', sans-serif; font-size:18px;
     text-transform:uppercase; letter-spacing:0.03em;
   }
   @media (max-width:640px){
-    .brand img{ height:52px; width:auto; }
+    .brand img{ height:66px; width:66px; }
     .brand-word{ display:none; }
   }
   .brand-word b{ color:var(--ember); }
