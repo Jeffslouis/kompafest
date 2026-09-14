@@ -74,7 +74,7 @@
   /* Top bar */
   .topbar{
     display:flex; align-items:center; justify-content:space-between;
-    padding:18px 0;
+    padding-top:18px; padding-bottom:18px;
   }
   .brand{ display:flex; align-items:center; gap:10px; }
   .brand img{ height:50px; width:auto; }
@@ -157,7 +157,6 @@
     backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
     border-bottom:1px solid rgba(var(--paper-rgb),0.08);
   }
-  .join-header .topbar{ padding:18px 0; }
   .join-grid{ display:grid; grid-template-columns:1fr 1.1fr; gap:56px; align-items:start; }
   @media (max-width:860px){ .join-grid{ grid-template-columns:1fr; gap:28px; } }
 
@@ -202,7 +201,7 @@
   .field input:focus, .field select:focus{ outline:2px solid var(--lagoon); outline-offset:1px; }
 
   .btn-primary{
-    background:var(--ember); color:var(--ink);
+    background:rgba(255,90,54,0.85); color:var(--ink);
     padding:15px 26px; border-radius:100px;
     font-weight:800; font-size:14px; letter-spacing:0.02em;
     text-transform:uppercase;
@@ -212,7 +211,7 @@
     transition:transform .2s ease, background .2s ease;
     margin-top:2px;
   }
-  .btn-primary:hover{ transform:translateY(-2px); background:var(--gold); }
+  .btn-primary:hover{ transform:translateY(-2px); background:rgba(204,72,43,0.95); }
   .btn-primary:disabled{ opacity:0.6; cursor:default; transform:none; }
 
   .form-msg{ font-size:13.5px; font-weight:600; }
@@ -269,7 +268,7 @@
     <header class="join-header">
       <div class="wrap topbar">
         <a class="brand" href="/" aria-label="KompaFest Cruise">
-          <img src="full-site/images/logo-header.webp" alt="">
+          <img src="full-site/images/logo-mark.png" alt="">
           <span class="brand-word">Kompa<b>Fest</b> Cruise</span>
         </a>
       </div>
