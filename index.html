@@ -262,10 +262,6 @@
       <div>
         <form id="priorityForm">
           <div class="field">
-            <label for="pf-name">Name</label>
-            <input id="pf-name" name="name" type="text" placeholder="Your full name" required autocomplete="name">
-          </div>
-          <div class="field">
             <label for="pf-email">Email</label>
             <input id="pf-email" name="email" type="email" placeholder="you@email.com" required autocomplete="email">
           </div>
@@ -399,7 +395,6 @@
           mode: 'no-cors',
           body: new URLSearchParams({
             type: 'priority',
-            name: form.name.value,
             email: form.email.value,
             agerange: form.agerange.value,
             gender: form.gender.value,
