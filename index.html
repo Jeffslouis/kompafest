@@ -83,7 +83,10 @@
     text-transform:uppercase; letter-spacing:0.03em;
   }
   @media (max-width:640px){
-    .brand img{ height:58px; }
+    .brand img{
+      height:52px; width:52px; border-radius:50%;
+      object-fit:cover; background:#fff;
+    }
     .brand-word{ display:none; }
   }
   .brand-word b{ color:var(--ember); }
@@ -239,7 +242,7 @@
       <div class="topbar">
         <a class="brand" href="/" aria-label="KompaFest Cruise">
           <picture>
-            <source media="(max-width:640px)" srcset="full-site/images/logo-transparent.png">
+            <source media="(max-width:640px)" srcset="apple-touch-icon.png">
             <img src="full-site/images/logo.webp" alt="">
           </picture>
           <span class="brand-word">Kompa<b>Fest</b> Cruise</span>
