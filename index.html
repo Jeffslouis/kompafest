@@ -78,13 +78,6 @@
     text-transform:uppercase; letter-spacing:0.03em;
   }
   .brand-word b{ color:var(--ember); }
-  .topbar-note{
-    font-family:'Space Mono', monospace;
-    font-size:11.5px; letter-spacing:0.06em; text-transform:uppercase;
-    color:rgba(var(--paper-rgb),0.5);
-    display:none;
-  }
-  @media (min-width:640px){ .topbar-note{ display:block; } }
 
   /* Hero */
   .hero{
@@ -232,7 +225,6 @@
         <img src="full-site/images/logo.webp" alt="">
         <span class="brand-word">Kompa<b>Fest</b> Cruise</span>
       </a>
-      <span class="topbar-note mono">Departing Miami, FL</span>
     </div>
   </header>
 
@@ -241,17 +233,13 @@
       <img src="full-site/images/hero-poster.jpg" alt="Cruise ship at sea">
     </div>
     <div class="wrap hero-inner">
-      <!-- Headline / subhead: placeholder copy, edit freely -->
-      <h1>Four nights of Kompa, <em>Zouk</em> and Raboday at sea.</h1>
-      <p class="hero-sub">KompaFest Cruise is opening its priority list before general booking. Get on it now for first access, and be the first to hear the sail dates, ship, and lineup.</p>
-
       <div class="countdown" id="countdown" aria-live="polite">
         <div class="count-box"><span class="n" id="cd-days">00</span><span class="u">Days</span></div>
         <div class="count-box"><span class="n" id="cd-hours">00</span><span class="u">Hours</span></div>
         <div class="count-box"><span class="n" id="cd-mins">00</span><span class="u">Minutes</span></div>
         <div class="count-box"><span class="n" id="cd-secs">00</span><span class="u">Seconds</span></div>
       </div>
-      <p class="countdown-note mono" id="countdown-note">Until the priority list closes</p>
+      <p class="countdown-note mono" id="countdown-note">Until booking opens</p>
     </div>
   </section>
 
@@ -340,7 +328,7 @@
         if (diff <= 0){
           els.days.textContent = '00'; els.hours.textContent = '00';
           els.mins.textContent = '00'; els.secs.textContent = '00';
-          els.note.textContent = "It's here";
+          els.note.textContent = "Booking is open";
           clearInterval(timer);
           return;
         }
