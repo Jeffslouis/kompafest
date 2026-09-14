@@ -77,13 +77,13 @@
     padding:18px 0;
   }
   .brand{ display:flex; align-items:center; gap:9px; }
-  .brand img{ height:30px; width:auto; }
+  .brand img{ height:40px; width:auto; }
   .brand-word{
     font-family:'Anton', sans-serif; font-size:16px;
     text-transform:uppercase; letter-spacing:0.03em;
   }
   @media (max-width:640px){
-    .brand img{ height:58px; width:auto; }
+    .brand img{ height:40px; width:auto; }
     .brand-word{ display:none; }
   }
   .brand-word b{ color:var(--ember); }
@@ -118,8 +118,8 @@
   /* Countdown */
   .countdown-label{
     margin-top:32px;
-    font-family:'Space Mono', monospace;
-    font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+    font-family:'Manrope', sans-serif;
+    font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase;
     color:var(--lagoon);
   }
   .countdown{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
@@ -144,10 +144,19 @@
     color:rgba(var(--paper-rgb),0.5);
   }
   /* Signup panel */
-  section#join{ position:relative; overflow:hidden; }
-  .join-inner{ position:relative; z-index:2; padding-top:96px; padding-bottom:64px; }
-  @media (max-width:640px){ .join-inner{ padding-top:130px; } }
-  .join-header{ position:absolute; top:0; left:0; right:0; z-index:2; padding:0 24px; }
+  section#join{ position:relative; }
+  .join-inner{ position:relative; z-index:2; padding-top:40px; padding-bottom:64px; }
+  @media (max-width:640px){ .join-inner{ padding-top:24px; } }
+  .join-header{
+    position:sticky; top:0; z-index:5; width:100%;
+    background:rgba(10,20,34,0); backdrop-filter:blur(0px); -webkit-backdrop-filter:blur(0px);
+    transition:background 0.25s ease, backdrop-filter 0.25s ease;
+  }
+  .join-header.scrolled{
+    background:rgba(10,20,34,0.55);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(var(--paper-rgb),0.08);
+  }
   .join-header .topbar{ padding:18px 0; }
   .join-grid{ display:grid; grid-template-columns:1fr 1.1fr; gap:56px; align-items:start; }
   @media (max-width:860px){ .join-grid{ grid-template-columns:1fr; gap:28px; } }
@@ -174,8 +183,8 @@
   #priorityForm[hidden]{ display:none; }
   .field label{
     display:block;
-    font-family:'Space Mono', monospace;
-    font-size:11px; letter-spacing:0.05em; text-transform:uppercase;
+    font-family:'Manrope', sans-serif;
+    font-size:11px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase;
     color:var(--gold); margin-bottom:7px;
   }
   .row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
@@ -257,13 +266,10 @@
       <img src="full-site/images/hero-poster.jpg" alt="Cruise ship at sea">
     </div>
 
-    <header class="wrap join-header">
-      <div class="topbar">
+    <header class="join-header">
+      <div class="wrap topbar">
         <a class="brand" href="/" aria-label="KompaFest Cruise">
-          <picture>
-            <source media="(max-width:640px)" srcset="full-site/images/logo-transparent.png">
-            <img src="full-site/images/logo.webp" alt="">
-          </picture>
+          <img src="full-site/images/logo.webp" alt="">
           <span class="brand-word">Kompa<b>Fest</b> Cruise</span>
         </a>
       </div>
@@ -437,6 +443,19 @@
           show('Something went wrong. Please try again.', true);
         });
       });
+    })();
+
+    /* Sticky header: gains a translucent backdrop once the page scrolls,
+       stays fully transparent over the hero at the very top. */
+    (function(){
+      var header = document.querySelector('.join-header');
+      if(!header) return;
+      function onScroll(){
+        if (window.scrollY > 8) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+      }
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive:true });
     })();
   </script>
 
