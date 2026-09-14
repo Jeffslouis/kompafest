@@ -97,13 +97,13 @@
   .hero-bg::after{
     content:""; position:absolute; inset:0;
     backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
-    background:rgba(10,20,34,0.42);
-    mask-image:linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 50%, rgba(0,0,0,0.65) 100%);
-    -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 50%, rgba(0,0,0,0.65) 100%);
+    background:rgba(10,20,34,0.6);
+    mask-image:linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 50%, rgba(0,0,0,0.8) 100%);
+    -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.95) 50%, rgba(0,0,0,0.8) 100%);
   }
   @media (max-width:640px){
     .hero-bg img{ filter:brightness(0.9) saturate(1.1); }
-    .hero-bg::after{ background:rgba(10,20,34,0.65); }
+    .hero-bg::after{ background:rgba(10,20,34,0.8); }
   }
 
 
