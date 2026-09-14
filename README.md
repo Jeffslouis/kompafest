@@ -2,11 +2,28 @@
 
 Marketing site for KompaFest Cruise. Static HTML, served via GitHub Pages at https://kompafestcruise.com.
 
-- `index.html` — home (hero, Free Cabin Raffle, sponsor teaser, itinerary, mailing list)
-- `faq.html`, `presale.html`, `sponsor.html`, `ambassador.html`, `music.html` — content pages
-- `privacy.html`, `terms.html`, `refund.html`, `raffle-rules.html` — legal
-- `images/` — assets (`logo.webp` is the footer mark; the header uses a CSS wordmark)
-- `screenshot.py` — local viewport screenshot helper
+## Structure
+
+- **`/index.html`** (repo root) — the current live homepage: a "coming soon"
+  countdown + priority-list signup page. This is what loads at
+  kompafestcruise.com. Countdown target date is one `const` near the top of
+  its inline `<script>`, clearly labeled `COUNTDOWN_TARGET`, edit it directly.
+  Also has its own `favicon.ico` / `apple-touch-icon.png` copies at the repo
+  root (duplicates of the ones in `full-site/`, kept in sync manually).
+- **`/full-site/`** — the complete original marketing site (itinerary, FAQ,
+  ambassador program, sponsor page, music, raffle, legal pages, etc.),
+  preserved exactly as it was, just relocated out of the root route. Reachable
+  at kompafestcruise.com/full-site/. Nothing inside it was edited as part of
+  the move — only its location changed. See below for its own page list.
+  - `index.html` — the old home (hero, Free Cabin Raffle, sponsor teaser, itinerary, mailing list)
+  - `faq.html`, `presale.html`, `sponsor.html`, `ambassador.html`, `music.html` — content pages
+  - `privacy.html`, `terms.html`, `refund.html`, `raffle-rules.html` — legal
+  - `images/` — assets (`logo.webp` is the footer mark; the header uses a CSS wordmark)
+  - `screenshot.py` — local viewport screenshot helper
+
+To make `/full-site/` the live homepage again later, swap the two: move the
+root `index.html` (and its two script blocks) aside, `git mv full-site/*`
+back to root.
 
 ## Google Sheet: signups + visits + questions + sponsors
 
@@ -23,6 +40,8 @@ you own, one tab per submission type:
   have a question?" form on the FAQ page)
 - **Sponsors** — `Timestamp | Company | Contact | Email | Website | Package | Message | Page`
   (the sponsorship inquiry form)
+- **Priority** — `Timestamp | Name | Email | Agerange | Gender | Page`
+  (the priority-list form on the root "coming soon" `/index.html`)
 
 `question` and `sponsor` submissions are also emailed to
 `contact@kompafestcruise.com`.
@@ -44,7 +63,8 @@ function doPost(e) {
       signup:   { name: 'Signups',   cols: ['email', 'source', 'page'] },
       visit:    { name: 'Visits',    cols: ['page', 'ref', 'returning', 'visitor', 'screen', 'lang', 'ua'] },
       question: { name: 'Questions', cols: ['name', 'email', 'message', 'page'] },
-      sponsor:  { name: 'Sponsors',  cols: ['company', 'contact', 'email', 'website', 'package', 'message', 'page'] }
+      sponsor:  { name: 'Sponsors',  cols: ['company', 'contact', 'email', 'website', 'package', 'message', 'page'] },
+      priority: { name: 'Priority',  cols: ['name', 'email', 'agerange', 'gender', 'page'] }
     };
     var cfg = TABS[type] || {
       name: type.charAt(0).toUpperCase() + type.slice(1),
