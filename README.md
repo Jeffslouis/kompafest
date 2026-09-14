@@ -40,9 +40,12 @@ you own, one tab per submission type:
   have a question?" form on the FAQ page)
 - **Sponsors** — `Timestamp | Company | Contact | Email | Website | Package | Message | Page`
   (the sponsorship inquiry form)
-- **Priority** — `Timestamp | Email | Agerange | Gender | Page`
-  (the priority-list form on the root "coming soon" `/index.html`; the
-  Name field was removed from that form)
+- **Priority List** — `Timestamp | Email | Agerange | Gender | Page`
+  (the priority-list form on the root "coming soon" `/index.html`). Note:
+  an earlier version of this tab was named just "Priority" and has a
+  stale 6-column header (it still says "Name") from before the Name
+  field was removed from the form -- that tab is abandoned/unused now.
+  Safe to delete it whenever; it won't receive new rows.
 
 `question` and `sponsor` submissions are also emailed to
 `contact@kompafestcruise.com`.
@@ -65,7 +68,7 @@ function doPost(e) {
       visit:    { name: 'Visits',    cols: ['page', 'ref', 'returning', 'visitor', 'screen', 'lang', 'ua'] },
       question: { name: 'Questions', cols: ['name', 'email', 'message', 'page'] },
       sponsor:  { name: 'Sponsors',  cols: ['company', 'contact', 'email', 'website', 'package', 'message', 'page'] },
-      priority: { name: 'Priority',  cols: ['email', 'agerange', 'gender', 'page'] }
+      priority: { name: 'Priority List',  cols: ['email', 'agerange', 'gender', 'page'] }
     };
     var cfg = TABS[type] || {
       name: type.charAt(0).toUpperCase() + type.slice(1),
