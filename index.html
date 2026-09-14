@@ -107,7 +107,13 @@
   }
 
   /* Countdown */
-  .countdown{ display:flex; gap:10px; margin-top:32px; flex-wrap:wrap; }
+  .countdown-label{
+    margin-top:32px;
+    font-family:'Space Mono', monospace;
+    font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--lagoon);
+  }
+  .countdown{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
   .count-box{
     background:var(--ink-2);
     border:1px solid var(--line);
@@ -128,11 +134,6 @@
     font-size:10px; letter-spacing:0.09em; text-transform:uppercase;
     color:rgba(var(--paper-rgb),0.5);
   }
-  .countdown-note{
-    margin-top:10px; font-size:12.5px;
-    color:rgba(var(--paper-rgb),0.45);
-  }
-
   /* Signup panel */
   section#join{ padding:56px 0 64px; border-top:1px solid var(--line); }
   .join-grid{ display:grid; grid-template-columns:1fr 1.1fr; gap:56px; align-items:start; }
@@ -156,6 +157,7 @@
   }
 
   form#priorityForm{ display:grid; gap:14px; max-width:480px; }
+  #priorityForm[hidden]{ display:none; }
   .field label{
     display:block;
     font-family:'Space Mono', monospace;
@@ -191,6 +193,19 @@
   .btn-primary:disabled{ opacity:0.6; cursor:default; transform:none; }
 
   .form-msg{ font-size:13.5px; font-weight:600; }
+
+  .join-done{ max-width:480px; }
+  .join-check{
+    width:56px; height:56px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:16px; font-size:26px; font-weight:800;
+    background:var(--gold); color:var(--ink);
+  }
+  .join-done h3{ font-size:22px; color:var(--paper); }
+  .join-done p{
+    margin-top:8px; font-size:14.5px; line-height:1.6;
+    color:rgba(var(--paper-rgb),0.65);
+  }
   .fineprint{
     margin-top:2px; font-size:11.5px; line-height:1.6;
     color:rgba(var(--paper-rgb),0.45); max-width:480px;
@@ -245,13 +260,13 @@
           <li>Unsubscribe anytime</li>
         </ul>
 
+        <p class="countdown-label mono" id="countdown-label">Booking opens in</p>
         <div class="countdown" id="countdown" aria-live="polite">
           <div class="count-box"><span class="n" id="cd-days">00</span><span class="u">Days</span></div>
           <div class="count-box"><span class="n" id="cd-hours">00</span><span class="u">Hours</span></div>
           <div class="count-box"><span class="n" id="cd-mins">00</span><span class="u">Minutes</span></div>
           <div class="count-box"><span class="n" id="cd-secs">00</span><span class="u">Seconds</span></div>
         </div>
-        <p class="countdown-note mono" id="countdown-note">Until booking opens</p>
       </div>
 
       <div>
@@ -291,7 +306,14 @@
           <button type="submit" class="btn-primary">Join Priority List &rarr;</button>
           <p class="form-msg" id="priorityMsg" role="status" hidden></p>
         </form>
-        <p class="fineprint">By joining you agree to receive email updates about KompaFest Cruise. We may share your email with KompaFest Cruise sponsors and partners; unsubscribe anytime.</p>
+
+        <div class="join-done" id="joinDone" hidden>
+          <div class="join-check">&#10003;</div>
+          <h3>You've joined the priority list</h3>
+          <p>We'll email you the moment there's news to share.</p>
+        </div>
+
+        <p class="fineprint" id="joinFine">By joining you agree to receive email updates about KompaFest Cruise. We may share your email with KompaFest Cruise sponsors and partners; unsubscribe anytime.</p>
       </div>
     </div>
   </section>
@@ -319,7 +341,7 @@
         hours: document.getElementById('cd-hours'),
         mins: document.getElementById('cd-mins'),
         secs: document.getElementById('cd-secs'),
-        note: document.getElementById('countdown-note')
+        label: document.getElementById('countdown-label')
       };
       function pad(n){ return String(n).padStart(2,'0'); }
       function tick(){
@@ -327,7 +349,7 @@
         if (diff <= 0){
           els.days.textContent = '00'; els.hours.textContent = '00';
           els.mins.textContent = '00'; els.secs.textContent = '00';
-          els.note.textContent = "Booking is open";
+          els.label.textContent = "Booking is open now";
           clearInterval(timer);
           return;
         }
@@ -354,17 +376,26 @@
       var out = document.getElementById('priorityMsg');
       if(!form) return;
 
+      var done = document.getElementById('joinDone');
+      var fine = document.getElementById('joinFine');
+
       function show(text, isErr){
         out.textContent = text;
         out.hidden = false;
         out.style.color = isErr ? 'var(--ember)' : 'var(--lagoon)';
       }
 
+      function succeed(){
+        form.hidden = true;
+        if (fine) fine.hidden = true;
+        if (done) done.hidden = false;
+      }
+
       form.addEventListener('submit', function(e){
         e.preventDefault();
 
         if (form._honey && form._honey.value){
-          show("You're on the list.", false);
+          succeed();
           return;
         }
 
@@ -384,8 +415,7 @@
             page: location.pathname
           })
         }).then(function(){
-          form.querySelectorAll('input,select,button').forEach(function(el){ el.disabled = true; });
-          show("You're on the list. We'll email you the moment there's news.", false);
+          succeed();
         }).catch(function(){
           btn.disabled = false; btn.textContent = label;
           show('Something went wrong. Please try again.', true);
