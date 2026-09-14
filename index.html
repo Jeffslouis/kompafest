@@ -82,6 +82,10 @@
     font-family:'Anton', sans-serif; font-size:16px;
     text-transform:uppercase; letter-spacing:0.03em;
   }
+  @media (max-width:640px){
+    .brand img{ height:58px; }
+    .brand-word{ display:none; }
+  }
   .brand-word b{ color:var(--ember); }
 
 
@@ -124,6 +128,7 @@
   /* Signup panel */
   section#join{ position:relative; overflow:hidden; }
   .join-inner{ position:relative; z-index:2; padding-top:96px; padding-bottom:64px; }
+  @media (max-width:640px){ .join-inner{ padding-top:130px; } }
   .join-header{ position:absolute; top:0; left:0; right:0; z-index:2; padding:0 24px; }
   .join-header .topbar{ padding:18px 0; }
   .join-grid{ display:grid; grid-template-columns:1fr 1.1fr; gap:56px; align-items:start; }
@@ -233,7 +238,10 @@
     <header class="wrap join-header">
       <div class="topbar">
         <a class="brand" href="/" aria-label="KompaFest Cruise">
-          <img src="full-site/images/logo.webp" alt="">
+          <picture>
+            <source media="(max-width:640px)" srcset="full-site/images/logo-transparent.png">
+            <img src="full-site/images/logo.webp" alt="">
+          </picture>
           <span class="brand-word">Kompa<b>Fest</b> Cruise</span>
         </a>
       </div>
