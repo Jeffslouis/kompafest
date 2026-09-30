@@ -21,12 +21,14 @@
   :root{
     --ink:#070D16;
     --ink-2:#10233A;
-    --ember:#F43F5E;
+    --violet:#7C3AED;
+    --ember:#EC4899;
     --gold:#FFC93D;
     --lagoon:#17E3C9;
     --sand:#FFEFD6;
     --paper:#F5F7FA;
     --line: rgba(var(--paper-rgb),0.12);
+    --accent-grad: linear-gradient(135deg, var(--violet), var(--ember));
   }
   :root{ --ink-rgb: 7, 13, 22; --paper-rgb: 245,247,250; }
 
@@ -57,7 +59,7 @@
 
   /* Ticker */
   .ticker-band{
-    background:var(--ember); color:var(--ink);
+    background:var(--accent-grad); color:var(--ink);
     overflow:hidden; white-space:nowrap;
     border-bottom:1px solid var(--ink);
   }
@@ -153,7 +155,7 @@
     transition:background 0.25s ease, backdrop-filter 0.25s ease;
   }
   .join-header.scrolled{
-    background:rgba(7,13,22,0.55);
+    background:rgba(7,13,22,0.4);
     backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
     border-bottom:1px solid rgba(var(--paper-rgb),0.08);
   }
@@ -205,20 +207,22 @@
   .field input:focus, .field select:focus{ outline:2px solid var(--lagoon); outline-offset:1px; }
 
   .btn-primary{
-    background:rgba(244,63,94,0.85); color:var(--ink);
+    background:linear-gradient(135deg, rgba(124,58,237,0.78), rgba(236,72,153,0.78));
+    color:var(--ink);
     padding:15px 26px; border-radius:100px;
     font-weight:800; font-size:14px; letter-spacing:0.02em;
     text-transform:uppercase;
     border:none; cursor:pointer;
     display:inline-flex; align-items:center; gap:8px; justify-content:center;
     justify-self:start;
-    box-shadow:0 0 0 0 rgba(244,63,94,0);
+    box-shadow:0 0 0 0 rgba(236,72,153,0);
     transition:transform .2s ease, background .2s ease, box-shadow .2s ease;
     margin-top:2px;
   }
   .btn-primary:hover{
-    transform:translateY(-2px); background:rgba(200,52,77,0.95);
-    box-shadow:0 8px 24px -6px rgba(244,63,94,0.55);
+    transform:translateY(-2px);
+    background:linear-gradient(135deg, rgba(124,58,237,0.92), rgba(236,72,153,0.92));
+    box-shadow:0 8px 24px -6px rgba(236,72,153,0.5);
   }
   .btn-primary:disabled{ opacity:0.6; cursor:default; transform:none; box-shadow:none; }
 
