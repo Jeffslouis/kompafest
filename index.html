@@ -15,27 +15,27 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   /* ---- Same palette/fonts as the full site (full-site/*.html) ---- */
   :root{
-    --ink:#0A1422;
-    --ink-2:#15283F;
+    --ink:#070D16;
+    --ink-2:#10233A;
     --ember:#F43F5E;
     --gold:#FFC93D;
     --lagoon:#17E3C9;
     --sand:#FFEFD6;
-    --paper:#F7F4EE;
-    --line: rgba(var(--paper-rgb),0.14);
+    --paper:#F5F7FA;
+    --line: rgba(var(--paper-rgb),0.12);
   }
-  :root{ --ink-rgb: 10, 20, 34; --paper-rgb: 247,244,238; }
+  :root{ --ink-rgb: 7, 13, 22; --paper-rgb: 245,247,250; }
 
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
     background:var(--ink);
     color:var(--paper);
-    font-family:'Manrope', sans-serif;
+    font-family:'Work Sans', sans-serif;
     overflow-x:hidden;
     min-height:100vh;
     display:flex;
@@ -44,11 +44,11 @@
   #join{ flex:1; display:flex; flex-direction:column; }
   .join-inner{ flex:1; display:flex; flex-direction:column; justify-content:center; }
   h1,h2,.display{
-    font-family:'Anton', sans-serif;
-    font-weight:400;
+    font-family:'Outfit', sans-serif;
+    font-weight:800;
     text-transform:uppercase;
-    letter-spacing:0.01em;
-    line-height:0.97;
+    letter-spacing:-0.01em;
+    line-height:1.04;
   }
   .mono{ font-family:'Space Mono', monospace; }
   a{ color:inherit; text-decoration:none; }
@@ -79,8 +79,8 @@
   .brand{ display:flex; align-items:center; gap:10px; }
   .brand img{ height:83px; width:83px; aspect-ratio:1/1; object-fit:contain; }
   .brand-word{
-    font-family:'Anton', sans-serif; font-size:18px;
-    text-transform:uppercase; letter-spacing:0.03em;
+    font-family:'Outfit', sans-serif; font-size:18px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.02em;
   }
   @media (max-width:640px){
     .brand img{ display:block; height:66px; width:66px; aspect-ratio:1/1; object-fit:contain; }
@@ -97,13 +97,13 @@
   .hero-bg::after{
     content:""; position:absolute; inset:0;
     backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-    background:rgba(10,20,34,0.58);
+    background:rgba(7,13,22,0.58);
     mask-image:linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 50%, rgba(0,0,0,0.75) 100%);
     -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 50%, rgba(0,0,0,0.75) 100%);
   }
   @media (max-width:640px){
     .hero-bg img{ filter:brightness(0.85) saturate(1.15); }
-    .hero-bg::after{ background:rgba(10,20,34,0.75); }
+    .hero-bg::after{ background:rgba(7,13,22,0.75); }
   }
 
 
@@ -118,7 +118,7 @@
   /* Countdown */
   .countdown-label{
     margin-top:32px;
-    font-family:'Manrope', sans-serif;
+    font-family:'Work Sans', sans-serif;
     font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase;
     color:var(--lagoon);
   }
@@ -149,11 +149,11 @@
   @media (max-width:640px){ .join-inner{ padding-top:24px; } }
   .join-header{
     position:sticky; top:0; z-index:5; width:100%;
-    background:rgba(10,20,34,0); backdrop-filter:blur(0px); -webkit-backdrop-filter:blur(0px);
+    background:rgba(7,13,22,0); backdrop-filter:blur(0px); -webkit-backdrop-filter:blur(0px);
     transition:background 0.25s ease, backdrop-filter 0.25s ease;
   }
   .join-header.scrolled{
-    background:rgba(10,20,34,0.55);
+    background:rgba(7,13,22,0.55);
     backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
     border-bottom:1px solid rgba(var(--paper-rgb),0.08);
   }
@@ -186,7 +186,7 @@
   #priorityForm[hidden]{ display:none; }
   .field label{
     display:block;
-    font-family:'Manrope', sans-serif;
+    font-family:'Work Sans', sans-serif;
     font-size:11px; font-weight:800; letter-spacing:0.05em; text-transform:uppercase;
     color:var(--gold); margin-bottom:7px;
   }
@@ -198,7 +198,7 @@
     border-radius:9px;
     padding:12px 14px;
     color:var(--paper);
-    font-family:'Manrope', sans-serif;
+    font-family:'Work Sans', sans-serif;
     font-size:14.5px;
   }
   .field input::placeholder{ color:rgba(var(--paper-rgb),0.4); }
