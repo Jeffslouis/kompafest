@@ -17,18 +17,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  /* ---- Caribbean blues/teal palette (priority-list page only) ---- */
+  /* ---- Same palette/fonts as the full site (full-site/*.html) ---- */
   :root{
-    --ink:#062529;
-    --ink-2:#0D3B3F;
-    --ember:#FF6B4A;
-    --gold:#FFCF4D;
-    --lagoon:#22E6CC;
-    --sand:#FDEEDC;
-    --paper:#F2F7F6;
+    --ink:#0A1422;
+    --ink-2:#15283F;
+    --ember:#FF5A36;
+    --gold:#FFC93D;
+    --lagoon:#17E3C9;
+    --sand:#FFEFD6;
+    --paper:#F7F4EE;
     --line: rgba(var(--paper-rgb),0.14);
   }
-  :root{ --ink-rgb: 6, 37, 41; --paper-rgb: 242,247,246; }
+  :root{ --ink-rgb: 10, 20, 34; --paper-rgb: 247,244,238; }
 
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -37,7 +37,12 @@
     color:var(--paper);
     font-family:'Manrope', sans-serif;
     overflow-x:hidden;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
   }
+  #join{ flex:1; display:flex; flex-direction:column; }
+  .join-inner{ flex:1; display:flex; flex-direction:column; justify-content:center; }
   h1,h2,.display{
     font-family:'Anton', sans-serif;
     font-weight:400;
@@ -72,112 +77,108 @@
     padding-top:18px; padding-bottom:18px;
   }
   .brand{ display:flex; align-items:center; gap:10px; }
-  .brand img{ display:none; }
+  .brand img{ height:83px; width:83px; aspect-ratio:1/1; object-fit:contain; }
   .brand-word{
     font-family:'Anton', sans-serif; font-size:18px;
     text-transform:uppercase; letter-spacing:0.03em;
   }
   @media (max-width:640px){
-    .brand img{ display:block; height:52px; width:52px; aspect-ratio:1/1; object-fit:contain; }
+    .brand img{ display:block; height:66px; width:66px; aspect-ratio:1/1; object-fit:contain; }
     .brand-word{ font-size:16px; }
   }
   .brand-word b{ color:var(--ember); }
 
+  /* Hero */
+  .hero-bg{ position:absolute; inset:0; z-index:0; }
+  .hero-bg img{
+    width:100%; height:100%; object-fit:cover; object-position:center 55%;
+    filter:brightness(0.95) saturate(1.15);
+  }
+  .hero-bg::after{
+    content:""; position:absolute; inset:0;
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    background:rgba(10,20,34,0.58);
+    mask-image:linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 50%, rgba(0,0,0,0.75) 100%);
+    -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 50%, rgba(0,0,0,0.75) 100%);
+  }
+  @media (max-width:640px){
+    .hero-bg img{ filter:brightness(0.85) saturate(1.15); }
+    .hero-bg::after{ background:rgba(10,20,34,0.75); }
+  }
+
+
+  h1{ font-size:clamp(34px, 6vw, 62px); }
+  h1 em{ font-style:normal; color:var(--ember); }
+  .hero-sub{
+    max-width:460px; margin-top:16px;
+    font-size:16.5px; line-height:1.6;
+    color:rgba(var(--paper-rgb),0.72);
+  }
+
+  /* Countdown */
+  .countdown-label{
+    margin-top:32px;
+    font-family:'Manrope', sans-serif;
+    font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--lagoon);
+  }
+  .countdown{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+  .count-box{
+    background:var(--ink-2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px 8px;
+    min-width:66px;
+    text-align:center;
+  }
+  .count-box .n{
+    font-family:'Space Mono', monospace; font-weight:700;
+    font-size:clamp(22px, 4vw, 30px);
+    color:var(--gold); line-height:1;
+    font-variant-numeric: tabular-nums;
+  }
+  .count-box .u{
+    display:block; margin-top:5px;
+    font-family:'Space Mono', monospace;
+    font-size:10px; letter-spacing:0.09em; text-transform:uppercase;
+    color:rgba(var(--paper-rgb),0.5);
+  }
+  /* Signup panel */
+  section#join{ position:relative; }
+  .join-inner{ position:relative; z-index:2; padding-top:40px; padding-bottom:64px; }
+  @media (max-width:640px){ .join-inner{ padding-top:24px; } }
   .join-header{
     position:sticky; top:0; z-index:5; width:100%;
     background:rgba(10,20,34,0); backdrop-filter:blur(0px); -webkit-backdrop-filter:blur(0px);
     transition:background 0.25s ease, backdrop-filter 0.25s ease;
   }
   .join-header.scrolled{
-    background:rgba(10,20,34,0.88);
+    background:rgba(10,20,34,0.55);
     backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
     border-bottom:1px solid rgba(var(--paper-rgb),0.08);
   }
+  .join-grid{ display:grid; grid-template-columns:1fr 1.1fr; gap:56px; align-items:start; }
+  @media (max-width:860px){ .join-grid{ grid-template-columns:1fr; gap:28px; } }
 
-  /* Hero collage */
-  .hero-collage{ background:var(--ink); padding:10px 0 14px; }
-  .hero-collage-inner{
-    display:grid;
-    grid-template-columns:0.85fr 1.6fr 0.75fr;
-    gap:14px; align-items:center;
+  .join-copy h2{ font-size:clamp(26px, 4vw, 36px); }
+  .join-copy p{
+    margin-top:14px; max-width:420px;
+    font-size:15px; line-height:1.65;
+    color:rgba(var(--paper-rgb),0.65);
   }
-  .hc-photo{ border-radius:14px; overflow:hidden; background:var(--ink-2); }
-  .hc-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .hc-ship{ aspect-ratio:16/10; order:1; }
-  .hc-copy{ order:2; }
-  .hc-side{ display:grid; grid-template-columns:1fr 1fr; gap:10px; order:3; }
-  .hc-side .hc-photo{ aspect-ratio:16/9; }
-  .hc-copy .kicker{
-    color:var(--lagoon); font-size:11px; font-weight:700;
-    letter-spacing:0.12em; text-transform:uppercase;
-  }
-  .hc-copy h1{ margin-top:8px; font-size:clamp(22px, 2.8vw, 36px); }
-  .hc-copy h1 em{ font-style:normal; color:var(--ember); }
-  .hc-tagline{
-    margin-top:10px; font-size:11.5px; font-weight:700;
-    letter-spacing:0.06em; text-transform:uppercase; color:var(--gold);
-    line-height:1.6;
-  }
-  @media (max-width:900px){
-    .hero-collage-inner{ grid-template-columns:1fr; text-align:center; }
-    .hc-copy{ order:1; }
-    .hc-ship{ order:2; aspect-ratio:21/9; }
-    .hc-side{ order:3; grid-template-columns:1fr 1fr; }
-  }
-  @media (max-width:640px){
-    .hc-side{ display:none; }
-    .hc-ship{ aspect-ratio:3/1; }
-  }
-
-  /* Signup section: VIP benefits card + join form card */
-  .signup-section{ padding:14px 0 16px; }
-  .signup-grid{ display:grid; grid-template-columns:1fr 1.05fr; gap:18px; align-items:stretch; }
-  @media (max-width:860px){ .signup-grid{ grid-template-columns:1fr; gap:12px; } }
-  @media (max-width:640px){
-    .vip-card, .join-card{ padding:14px 18px; }
-    .vip-card > p{ display:none; }
-    .vip-list{ margin-top:6px; }
-  }
-
-  .vip-card{
-    background:var(--sand); color:var(--ink);
-    border-radius:16px; padding:16px 22px;
-    display:flex; flex-direction:column; justify-content:center;
-  }
-  .vip-card .kicker{
-    color:var(--ember); font-size:11px; font-weight:800;
-    letter-spacing:0.1em; text-transform:uppercase;
-  }
-  .vip-card h2{ margin-top:6px; font-size:clamp(19px, 2.2vw, 25px); color:var(--ink); }
-  .vip-card > p{
-    margin-top:8px; font-size:13.5px; line-height:1.5;
-    color:rgba(10,20,34,0.68); max-width:400px;
-  }
-  .vip-list{ margin-top:8px; display:grid; gap:5px; }
-  .vip-list li{
+  .join-list{ margin-top:22px; display:grid; gap:10px; }
+  @media (max-width:640px){ .join-list{ display:none; } }
+  .join-list li{
     display:flex; align-items:baseline; gap:10px;
-    font-size:13.5px; font-weight:600; color:rgba(10,20,34,0.82);
+    font-size:14px; color:rgba(var(--paper-rgb),0.75);
   }
-  .vip-list li::before{
-    content:"\2713"; flex-shrink:0;
-    width:16px; height:16px; border-radius:50%;
-    background:var(--ember); color:var(--paper);
-    font-size:10px; font-weight:800;
-    display:flex; align-items:center; justify-content:center;
-    transform:translateY(1px);
+  .join-list li::before{
+    content:""; width:6px; height:6px; border-radius:50%;
+    background:var(--lagoon); flex-shrink:0;
+    transform:translateY(-2px);
   }
 
-  .join-card{
-    background:var(--ink-2); border:1px solid var(--line);
-    border-radius:16px; padding:16px 22px;
-  }
-  .join-card h2{ font-size:clamp(17px, 1.8vw, 20px); }
-  .join-card > p{
-    margin-top:4px; font-size:12.5px; line-height:1.4;
-    color:rgba(var(--paper-rgb),0.6);
-  }
-
-  form#priorityForm{ display:grid; gap:8px; margin-top:10px; }
+  form#priorityForm{ display:grid; gap:14px; max-width:480px; }
   #priorityForm[hidden]{ display:none; }
   .field label{
     display:block;
@@ -188,94 +189,55 @@
   .row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   .field input, .field select{
     width:100%;
-    background:var(--ink);
+    background:var(--ink-2);
     border:1px solid var(--line);
     border-radius:9px;
-    padding:9px 12px;
+    padding:12px 14px;
     color:var(--paper);
     font-family:'Manrope', sans-serif;
-    font-size:14px;
+    font-size:14.5px;
   }
   .field input::placeholder{ color:rgba(var(--paper-rgb),0.4); }
   .field input:focus, .field select:focus{ outline:2px solid var(--lagoon); outline-offset:1px; }
 
   .btn-primary{
-    background:var(--ember); color:var(--ink);
-    padding:12px 26px; border-radius:100px;
-    font-weight:800; font-size:13.5px; letter-spacing:0.02em;
+    background:rgba(255,90,54,0.85); color:var(--ink);
+    padding:15px 26px; border-radius:100px;
+    font-weight:800; font-size:14px; letter-spacing:0.02em;
     text-transform:uppercase;
     border:none; cursor:pointer;
     display:inline-flex; align-items:center; gap:8px; justify-content:center;
-    width:100%;
+    justify-self:start;
     transition:transform .2s ease, background .2s ease;
     margin-top:2px;
   }
-  .btn-primary:hover{ transform:translateY(-2px); background:#e64f2e; }
+  .btn-primary:hover{ transform:translateY(-2px); background:rgba(204,72,43,0.95); }
   .btn-primary:disabled{ opacity:0.6; cursor:default; transform:none; }
 
   .form-msg{ font-size:13.5px; font-weight:600; }
 
-  .join-done{ margin-top:14px; }
+  .join-done{ max-width:480px; }
   .join-check{
-    width:42px; height:42px; border-radius:50%;
+    width:56px; height:56px; border-radius:50%;
     display:flex; align-items:center; justify-content:center;
-    margin-bottom:10px; font-size:20px; font-weight:800;
+    margin-bottom:16px; font-size:26px; font-weight:800;
     background:var(--gold); color:var(--ink);
   }
-  .join-done h3{ font-size:18px; color:var(--paper); }
+  .join-done h3{ font-size:22px; color:var(--paper); }
   .join-done p{
-    margin-top:6px; font-size:13.5px; line-height:1.5;
+    margin-top:8px; font-size:14.5px; line-height:1.6;
     color:rgba(var(--paper-rgb),0.65);
   }
   .fineprint{
-    margin-top:10px; font-size:10.5px; line-height:1.5;
-    color:rgba(var(--paper-rgb),0.45);
+    margin-top:18px; font-size:11.5px; line-height:1.6;
+    color:rgba(var(--paper-rgb),0.45); max-width:480px;
   }
   .fineprint a{ color:rgba(var(--paper-rgb),0.7); text-decoration:underline; }
 
-  /* Countdown band */
-  .countdown-band{
-    background:var(--ink-2);
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-    padding:10px 0;
-  }
-  .countdown-band-inner{
-    display:flex; align-items:center; justify-content:center;
-    gap:22px; flex-wrap:wrap;
-  }
-  .countdown-label{
-    font-family:'Manrope', sans-serif;
-    font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--lagoon);
-  }
-  .countdown{ display:flex; gap:8px; flex-wrap:wrap; }
-  .count-box{
-    background:var(--ink);
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:7px 11px;
-    min-width:54px;
-    text-align:center;
-  }
-  .count-box .n{
-    font-family:'Space Mono', monospace; font-weight:700;
-    font-size:clamp(17px, 2.6vw, 21px);
-    color:var(--gold); line-height:1;
-    font-variant-numeric: tabular-nums;
-  }
-  .count-box .u{
-    display:block; margin-top:3px;
-    font-family:'Space Mono', monospace;
-    font-size:8.5px; letter-spacing:0.09em; text-transform:uppercase;
-    color:rgba(var(--paper-rgb),0.5);
-  }
-  @media (max-width:640px){ .countdown-band-inner{ flex-direction:column; gap:8px; } }
-
   footer{
     border-top:1px solid var(--line);
-    padding:12px 0;
-    font-size:11px;
+    padding:22px 0;
+    font-size:12px;
     color:rgba(var(--paper-rgb),0.4);
     display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
   }
@@ -298,49 +260,41 @@
     </div>
   </div>
 
-  <header class="join-header">
-    <div class="wrap topbar">
-      <a class="brand" href="/" aria-label="KompaFest Cruise">
-        <img src="full-site/images/logo-mark.png" alt="">
-        <span class="brand-word">Kompa<b>Fest</b> Cruise</span>
-      </a>
+  <section id="join">
+    <div class="hero-bg">
+      <img src="full-site/images/hero-wake-sunset.jpg" alt="Ship's wake at golden hour">
     </div>
-  </header>
 
-  <section class="hero-collage">
-    <div class="wrap hero-collage-inner">
-      <div class="hc-photo hc-ship">
-        <img src="full-site/images/hero-poster.jpg" alt="Cruise ship at sea">
+    <header class="join-header">
+      <div class="wrap topbar">
+        <a class="brand" href="/" aria-label="KompaFest Cruise">
+          <img src="full-site/images/logo-mark.png" alt="">
+          <span class="brand-word">Kompa<b>Fest</b> Cruise</span>
+        </a>
       </div>
-      <div class="hc-copy">
-        <p class="kicker mono">Haitian Kompa · Zouk · Raboday</p>
-        <h1>Experience the ultimate<br>Haitian music festival <em>at sea</em></h1>
-        <p class="hc-tagline">Four nights &middot; One luxury ship &middot; Unlimited drinks &middot; Non-stop party</p>
-      </div>
-      <div class="hc-side">
-        <div class="hc-photo"><img src="https://images.nappy.co/photo/dRz8RLhMVyg8WvSpecIew.jpg?width=700" alt="Live sets onboard"></div>
-        <div class="hc-photo"><img src="https://images.nappy.co/photo/WhPYQ_MzQsO1msNPbEgXp.jpg?width=700" alt="Crowd dancing on deck at sunset"></div>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <section class="signup-section">
-    <div class="wrap signup-grid">
-      <div class="vip-card">
-        <p class="kicker mono">VIP early access</p>
-        <h2>Lock in your<br>VIP early access</h2>
-        <p>Be the first to secure cabins before public booking opens.</p>
-        <ul class="vip-list">
-          <li>Priority cabin selection</li>
-          <li>Early-bird pricing discounts</li>
-          <li>Exclusive lineup announcements</li>
+    <div class="wrap join-inner">
+    <div class="join-grid">
+      <div class="join-copy">
+        <h2>Join the<br>priority list</h2>
+        <p>Priority-list members get first access before the public, ahead of everyone finding out on social media.</p>
+        <ul class="join-list">
+          <li>First access before public booking opens</li>
+          <li>Early word on sail dates, ship and lineup</li>
+          <li>Unsubscribe anytime</li>
         </ul>
+
+        <p class="countdown-label mono" id="countdown-label">Booking opens in</p>
+        <div class="countdown" id="countdown" aria-live="polite">
+          <div class="count-box"><span class="n" id="cd-days">00</span><span class="u">Days</span></div>
+          <div class="count-box"><span class="n" id="cd-hours">00</span><span class="u">Hours</span></div>
+          <div class="count-box"><span class="n" id="cd-mins">00</span><span class="u">Minutes</span></div>
+          <div class="count-box"><span class="n" id="cd-secs">00</span><span class="u">Seconds</span></div>
+        </div>
       </div>
 
-      <div class="join-card">
-        <h2>Join the priority list</h2>
-        <p>One email, no spam. First access before the public, ahead of everyone finding out on social media.</p>
-
+      <div>
         <form id="priorityForm">
           <div class="field">
             <label for="pf-email">Email</label>
@@ -371,7 +325,7 @@
           <!-- honeypot: real visitors never fill this in -->
           <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
 
-          <button type="submit" class="btn-primary">Get VIP Priority Access &rarr;</button>
+          <button type="submit" class="btn-primary">Join Priority List &rarr;</button>
           <p class="form-msg" id="priorityMsg" role="status" hidden></p>
         </form>
 
@@ -384,17 +338,6 @@
         <p class="fineprint" id="joinFine">By joining you agree to receive email updates about KompaFest Cruise. We may share your email with KompaFest Cruise sponsors and partners; unsubscribe anytime.</p>
       </div>
     </div>
-  </section>
-
-  <section class="countdown-band">
-    <div class="wrap countdown-band-inner">
-      <p class="countdown-label mono" id="countdown-label">Booking opens in</p>
-      <div class="countdown" id="countdown" aria-live="polite">
-        <div class="count-box"><span class="n" id="cd-days">00</span><span class="u">Days</span></div>
-        <div class="count-box"><span class="n" id="cd-hours">00</span><span class="u">Hours</span></div>
-        <div class="count-box"><span class="n" id="cd-mins">00</span><span class="u">Minutes</span></div>
-        <div class="count-box"><span class="n" id="cd-secs">00</span><span class="u">Seconds</span></div>
-      </div>
     </div>
   </section>
 
@@ -446,9 +389,9 @@
   <script>
     /* ======================================================================
        Priority-list signup -> same Google Sheet used by the full site,
-       via the existing Apps Script web app. Appends to the "Priority List"
-       tab (auto-created on first submit): Timestamp | Email | Agerange |
-       Gender | Page. See /README.md for the Apps Script source.
+       via the existing Apps Script web app. Appends to a "Priority" tab
+       (auto-created on first submit): Timestamp | Name | Email | Agerange
+       | Gender | Page. See /README.md for the Apps Script source.
        ====================================================================== */
     (function(){
       var EP = "https://script.google.com/macros/s/AKfycbzBFEwgLAMZaVrnWPL1YDP41QwueGlwKZq1aNgYrZHtitHKVT12eRvrtiJVIV6fJ2QayA/exec";
@@ -502,7 +445,7 @@
       });
     })();
 
-    /* Sticky header: gains a solid backdrop once the page scrolls,
+    /* Sticky header: gains a translucent backdrop once the page scrolls,
        stays fully transparent over the hero at the very top. */
     (function(){
       var header = document.querySelector('.join-header');
