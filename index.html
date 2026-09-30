@@ -17,18 +17,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  /* ---- Same palette/fonts as the full site (full-site/*.html) ---- */
+  /* ---- Caribbean blues/teal palette (priority-list page only) ---- */
   :root{
-    --ink:#0A1422;
-    --ink-2:#15283F;
-    --ember:#FF5A36;
-    --gold:#FFC93D;
-    --lagoon:#17E3C9;
-    --sand:#FFEFD6;
-    --paper:#F7F4EE;
+    --ink:#062529;
+    --ink-2:#0D3B3F;
+    --ember:#FF6B4A;
+    --gold:#FFCF4D;
+    --lagoon:#22E6CC;
+    --sand:#FDEEDC;
+    --paper:#F2F7F6;
     --line: rgba(var(--paper-rgb),0.14);
   }
-  :root{ --ink-rgb: 10, 20, 34; --paper-rgb: 247,244,238; }
+  :root{ --ink-rgb: 6, 37, 41; --paper-rgb: 242,247,246; }
 
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -95,80 +95,89 @@
   }
 
   /* Hero collage */
-  .hero-collage{ background:var(--ink); padding:28px 0 48px; }
+  .hero-collage{ background:var(--ink); padding:10px 0 14px; }
   .hero-collage-inner{
     display:grid;
     grid-template-columns:0.85fr 1.6fr 0.75fr;
-    gap:18px; align-items:center;
+    gap:14px; align-items:center;
   }
-  .hc-photo{ border-radius:16px; overflow:hidden; background:var(--ink-2); }
+  .hc-photo{ border-radius:14px; overflow:hidden; background:var(--ink-2); }
   .hc-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .hc-ship{ aspect-ratio:3/4; order:1; }
+  .hc-ship{ aspect-ratio:16/10; order:1; }
   .hc-copy{ order:2; }
-  .hc-side{ display:grid; gap:14px; order:3; }
-  .hc-side .hc-photo{ aspect-ratio:4/3; }
+  .hc-side{ display:grid; grid-template-columns:1fr 1fr; gap:10px; order:3; }
+  .hc-side .hc-photo{ aspect-ratio:16/9; }
   .hc-copy .kicker{
-    color:var(--lagoon); font-size:12px; font-weight:700;
+    color:var(--lagoon); font-size:11px; font-weight:700;
     letter-spacing:0.12em; text-transform:uppercase;
   }
-  .hc-copy h1{ margin-top:12px; font-size:clamp(28px, 3.6vw, 46px); }
+  .hc-copy h1{ margin-top:8px; font-size:clamp(22px, 2.8vw, 36px); }
   .hc-copy h1 em{ font-style:normal; color:var(--ember); }
   .hc-tagline{
-    margin-top:18px; font-size:12.5px; font-weight:700;
-    letter-spacing:0.07em; text-transform:uppercase; color:var(--gold);
-    line-height:1.8;
+    margin-top:10px; font-size:11.5px; font-weight:700;
+    letter-spacing:0.06em; text-transform:uppercase; color:var(--gold);
+    line-height:1.6;
   }
   @media (max-width:900px){
     .hero-collage-inner{ grid-template-columns:1fr; text-align:center; }
     .hc-copy{ order:1; }
-    .hc-ship{ order:2; aspect-ratio:16/9; }
+    .hc-ship{ order:2; aspect-ratio:21/9; }
     .hc-side{ order:3; grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:640px){
+    .hc-side{ display:none; }
+    .hc-ship{ aspect-ratio:3/1; }
   }
 
   /* Signup section: VIP benefits card + join form card */
-  .signup-section{ padding:52px 0 56px; }
-  .signup-grid{ display:grid; grid-template-columns:1fr 1.05fr; gap:24px; align-items:stretch; }
-  @media (max-width:860px){ .signup-grid{ grid-template-columns:1fr; } }
+  .signup-section{ padding:14px 0 16px; }
+  .signup-grid{ display:grid; grid-template-columns:1fr 1.05fr; gap:18px; align-items:stretch; }
+  @media (max-width:860px){ .signup-grid{ grid-template-columns:1fr; gap:12px; } }
+  @media (max-width:640px){
+    .vip-card, .join-card{ padding:14px 18px; }
+    .vip-card > p{ display:none; }
+    .vip-list{ margin-top:6px; }
+  }
 
   .vip-card{
     background:var(--sand); color:var(--ink);
-    border-radius:20px; padding:36px 32px;
+    border-radius:16px; padding:16px 22px;
     display:flex; flex-direction:column; justify-content:center;
   }
   .vip-card .kicker{
-    color:var(--ember); font-size:12px; font-weight:800;
+    color:var(--ember); font-size:11px; font-weight:800;
     letter-spacing:0.1em; text-transform:uppercase;
   }
-  .vip-card h2{ margin-top:10px; font-size:clamp(24px, 3vw, 32px); color:var(--ink); }
+  .vip-card h2{ margin-top:6px; font-size:clamp(19px, 2.2vw, 25px); color:var(--ink); }
   .vip-card > p{
-    margin-top:14px; font-size:15px; line-height:1.6;
+    margin-top:8px; font-size:13.5px; line-height:1.5;
     color:rgba(10,20,34,0.68); max-width:400px;
   }
-  .vip-list{ margin-top:20px; display:grid; gap:11px; }
+  .vip-list{ margin-top:8px; display:grid; gap:5px; }
   .vip-list li{
     display:flex; align-items:baseline; gap:10px;
-    font-size:14.5px; font-weight:600; color:rgba(10,20,34,0.82);
+    font-size:13.5px; font-weight:600; color:rgba(10,20,34,0.82);
   }
   .vip-list li::before{
     content:"\2713"; flex-shrink:0;
-    width:18px; height:18px; border-radius:50%;
+    width:16px; height:16px; border-radius:50%;
     background:var(--ember); color:var(--paper);
-    font-size:11px; font-weight:800;
+    font-size:10px; font-weight:800;
     display:flex; align-items:center; justify-content:center;
     transform:translateY(1px);
   }
 
   .join-card{
     background:var(--ink-2); border:1px solid var(--line);
-    border-radius:20px; padding:36px 32px;
+    border-radius:16px; padding:16px 22px;
   }
-  .join-card h2{ font-size:clamp(20px, 2.6vw, 27px); }
+  .join-card h2{ font-size:clamp(17px, 1.8vw, 20px); }
   .join-card > p{
-    margin-top:10px; font-size:14px; line-height:1.55;
+    margin-top:4px; font-size:12.5px; line-height:1.4;
     color:rgba(var(--paper-rgb),0.6);
   }
 
-  form#priorityForm{ display:grid; gap:14px; margin-top:22px; }
+  form#priorityForm{ display:grid; gap:8px; margin-top:10px; }
   #priorityForm[hidden]{ display:none; }
   .field label{
     display:block;
@@ -182,18 +191,18 @@
     background:var(--ink);
     border:1px solid var(--line);
     border-radius:9px;
-    padding:12px 14px;
+    padding:9px 12px;
     color:var(--paper);
     font-family:'Manrope', sans-serif;
-    font-size:14.5px;
+    font-size:14px;
   }
   .field input::placeholder{ color:rgba(var(--paper-rgb),0.4); }
   .field input:focus, .field select:focus{ outline:2px solid var(--lagoon); outline-offset:1px; }
 
   .btn-primary{
     background:var(--ember); color:var(--ink);
-    padding:15px 26px; border-radius:100px;
-    font-weight:800; font-size:14px; letter-spacing:0.02em;
+    padding:12px 26px; border-radius:100px;
+    font-weight:800; font-size:13.5px; letter-spacing:0.02em;
     text-transform:uppercase;
     border:none; cursor:pointer;
     display:inline-flex; align-items:center; gap:8px; justify-content:center;
@@ -206,38 +215,30 @@
 
   .form-msg{ font-size:13.5px; font-weight:600; }
 
-  .join-done{ margin-top:22px; }
+  .join-done{ margin-top:14px; }
   .join-check{
-    width:52px; height:52px; border-radius:50%;
+    width:42px; height:42px; border-radius:50%;
     display:flex; align-items:center; justify-content:center;
-    margin-bottom:14px; font-size:24px; font-weight:800;
+    margin-bottom:10px; font-size:20px; font-weight:800;
     background:var(--gold); color:var(--ink);
   }
-  .join-done h3{ font-size:20px; color:var(--paper); }
+  .join-done h3{ font-size:18px; color:var(--paper); }
   .join-done p{
-    margin-top:8px; font-size:14px; line-height:1.6;
+    margin-top:6px; font-size:13.5px; line-height:1.5;
     color:rgba(var(--paper-rgb),0.65);
   }
   .fineprint{
-    margin-top:16px; font-size:11px; line-height:1.6;
+    margin-top:10px; font-size:10.5px; line-height:1.5;
     color:rgba(var(--paper-rgb),0.45);
   }
   .fineprint a{ color:rgba(var(--paper-rgb),0.7); text-decoration:underline; }
-
-  /* Photo strip */
-  .gallery-strip{ padding-bottom:52px; }
-  .gallery-grid{ display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; }
-  .g-photo{ border-radius:14px; overflow:hidden; aspect-ratio:1/1; background:var(--ink-2); }
-  .g-photo img{ width:100%; height:100%; object-fit:cover; transition:transform .35s ease; }
-  .g-photo:hover img{ transform:scale(1.06); }
-  @media (max-width:640px){ .gallery-grid{ grid-template-columns:repeat(2, 1fr); } }
 
   /* Countdown band */
   .countdown-band{
     background:var(--ink-2);
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
-    padding:24px 0;
+    padding:10px 0;
   }
   .countdown-band-inner{
     display:flex; align-items:center; justify-content:center;
@@ -248,33 +249,33 @@
     font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase;
     color:var(--lagoon);
   }
-  .countdown{ display:flex; gap:10px; flex-wrap:wrap; }
+  .countdown{ display:flex; gap:8px; flex-wrap:wrap; }
   .count-box{
     background:var(--ink);
     border:1px solid var(--line);
-    border-radius:12px;
-    padding:10px 14px;
-    min-width:64px;
+    border-radius:10px;
+    padding:7px 11px;
+    min-width:54px;
     text-align:center;
   }
   .count-box .n{
     font-family:'Space Mono', monospace; font-weight:700;
-    font-size:clamp(20px, 3.5vw, 26px);
+    font-size:clamp(17px, 2.6vw, 21px);
     color:var(--gold); line-height:1;
     font-variant-numeric: tabular-nums;
   }
   .count-box .u{
-    display:block; margin-top:4px;
+    display:block; margin-top:3px;
     font-family:'Space Mono', monospace;
-    font-size:9.5px; letter-spacing:0.09em; text-transform:uppercase;
+    font-size:8.5px; letter-spacing:0.09em; text-transform:uppercase;
     color:rgba(var(--paper-rgb),0.5);
   }
-  @media (max-width:640px){ .countdown-band-inner{ flex-direction:column; gap:12px; } }
+  @media (max-width:640px){ .countdown-band-inner{ flex-direction:column; gap:8px; } }
 
   footer{
     border-top:1px solid var(--line);
-    padding:22px 0;
-    font-size:12px;
+    padding:12px 0;
+    font-size:11px;
     color:rgba(var(--paper-rgb),0.4);
     display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
   }
@@ -382,15 +383,6 @@
 
         <p class="fineprint" id="joinFine">By joining you agree to receive email updates about KompaFest Cruise. We may share your email with KompaFest Cruise sponsors and partners; unsubscribe anytime.</p>
       </div>
-    </div>
-  </section>
-
-  <section class="gallery-strip">
-    <div class="wrap gallery-grid">
-      <div class="g-photo"><img src="https://images.nappy.co/photo/9RANqQSGQ7ZddfYw3Rkcn.jpg?width=700" alt="Crowd at a party under warm lights"></div>
-      <div class="g-photo"><img src="https://images.nappy.co/photo/j7Gp1I0adj3g5qhaon8mG.jpg?width=700" alt="Crowd dancing and taking photos at a party"></div>
-      <div class="g-photo"><img src="https://images.nappy.co/photo/cSqps9Wd9Ao1pR-_0gTRg.jpg?width=700" alt="Guest in colorful festival outfit dancing at night"></div>
-      <div class="g-photo"><img src="https://images.nappy.co/photo/2raSMpYDMHZJiqZEGaR2K.jpg?width=700" alt="DJ set at the party"></div>
     </div>
   </section>
 
